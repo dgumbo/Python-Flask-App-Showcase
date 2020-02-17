@@ -1,4 +1,8 @@
 *.PublishSettings
+.vs
+.vscode
+.vs/
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,10 +1,9 @@
-<!-- % extends "bootstrap/base.html" % -->
+{% extends "bootstrap/base.html" %}
 {% block title %}Python Flask Showcase Project{% endblock %}
- <!--% block head % 
-    {super()} -->
+{% block head %}
+    {{ super() }}
     {{ fontawesome_html() }} 
-    <!--
-% endblock % -->
+{% endblock %}
 
 {% block navbar %}  
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">

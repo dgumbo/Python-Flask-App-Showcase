@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect
-# from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap
 from flask_fontawesome import FontAwesome
  
 app = Flask(__name__)
-# Bootstrap(app) 
+Bootstrap(app) 
 FontAwesome(app)
  
 @app.route('/')
