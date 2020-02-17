@@ -61,6 +61,15 @@ stages:
       displayName: "Install Requirements"
       workingDirectory: $(projectRoot)
 
+
+    - script: |
+        python
+        from flask import Flask, render_template, request, redirect
+        from flask_bootstrap import Bootstrap
+        from flask_fontawesome import FontAwesome
+      displayName: "Test Requirements Requirements"
+      workingDirectory: $(projectRoot)
+
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
