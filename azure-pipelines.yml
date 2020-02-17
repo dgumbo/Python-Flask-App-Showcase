@@ -68,6 +68,7 @@ stages:
         from flask import Flask, render_template, request, redirect
         from flask_bootstrap import Bootstrap
         from flask_fontawesome import FontAwesome
+        quit()
       displayName: "Test Requirements Requirements"
       workingDirectory: $(projectRoot)
 
