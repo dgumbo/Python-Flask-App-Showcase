@@ -35,6 +35,7 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+
     - task: UsePythonVersion@0
       displayName: 'Use Python $(pythonVersion)'
       inputs:
@@ -47,9 +48,9 @@ stages:
       displayName: "Prepare Environment"
       workingDirectory: $(projectRoot)
     
-    # - script: pip install setup
-    #   displayName: "Setup Environment"
-    #   workingDirectory: $(projectRoot)
+    - script: pip install setup
+      displayName: "Setup Environment"
+      workingDirectory: $(projectRoot)
     
     - script: pip install -r requirements.txt
       displayName: "Install Requirements"
