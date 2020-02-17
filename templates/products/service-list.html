@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+
+
+{% block title %}Service List - {{ super()}}{% endblock %}
+{% block content %}
+
+
+<div class="container">
+    <h1>Service</h1> 
+
+    <a href="/products-services/create-service" class="btn btn-link"><i class="fa fa-plus"></i> Add Service</a> 
+    
+    <table class="table">
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+        {% for service in services %}
+        <tr>
+            <td> 
+                <a href="/products-services/update-product/{{service.id}}" class="btn btn-link" title="Update - {{ service.name }}">
+                    <i class="fa fa-pencil-alt"></i>
+                </a>  
+                <a href="/products-services/delete-product/{{service.id}}" class="btn btn-link" title="Delete - {{ service.name }}">
+                    <i class="fa fa-trash-alt"></i> 
+                </a> 
+            </td> 
+            <td>{{ service.name }}</td>
+            <td>{{ service.description }}</td>
+            <td>{{ service.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>   
+
+    <a href="/products-services/create-service" class="btn btn-link"><i class="fa fa-plus"></i> Add Service</a>
+         
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+
+
+{% block title %}Users List - {{ super()}}{% endblock %}
+{% block content %}
+
+
+<div class="container">
+    <h1>Users</h1>
+    <button class="btn btn-primary">New User</button> 
+    
+    <table class="table">
+        <tr>
+            <th>Action</th>
+            <th>Email Adress</th>
+            <th>Clients</th>
+            <th>Addresses</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>
+                <button class="btn btn-primary">Update</button>
+                <button class="btn btn-primary">Delete</button> 
+            </td>
+            <td>{{ user.email }}</td>
+            <td>{{ "0" }}</td>
+            <td>{{ "0" }}</td>
+        </tr>
+        {% endfor %}
+    </table>   
+
+    <button class="btn btn-primary">New User</button> 
+         
+</div>
+
+
+{% endblock %}
