@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, redirect
-from flask_bootstrap import Bootstrap
-from flask_fontawesome import FontAwesome
+# from flask_bootstrap import Bootstrap
+# from flask_fontawesome import FontAwesome
  
 app = Flask(__name__)
-Bootstrap(app) 
-fa = FontAwesome(app)
+# Bootstrap(app) 
+# fa = FontAwesome(app)
  
 @app.route('/')
 def index():
