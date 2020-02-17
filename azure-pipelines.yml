@@ -102,16 +102,16 @@ stages:
             inputs:
               azureSubscription: 'Visual Studio Enterprise Subscription – MPN (6cc72829-3201-4e65-944f-2d9bbe848ab3)'
               appName: 'flask-docker-test' 
-              containers: 'appsvcsample/flask-docker-test'
+              containers: 'appsample/flask-docker-test'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
 
 
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App : dgumbo-python-flask'
-            inputs:
-              azureSubscription: $(azureServiceConnectionId)
-              appName: $(testWebAppName)
-              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+          # - task: AzureWebApp@1
+          #   displayName: 'Deploy Azure Web App : dgumbo-python-flask'
+          #   inputs:
+          #     azureSubscription: $(azureServiceConnectionId)
+          #     appName: $(testWebAppName)
+          #     package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
 
 
 # - stage: DeployTest
