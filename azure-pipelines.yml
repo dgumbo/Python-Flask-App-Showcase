@@ -97,6 +97,14 @@ stages:
               versionSpec: '$(pythonVersion)'
             displayName: 'Use Python version'
 
+            
+          - task: AzureWebAppContainer@1
+            inputs:
+              azureSubscription: 'Visual Studio Enterprise Subscription – MPN (6cc72829-3201-4e65-944f-2d9bbe848ab3)'
+              appName: 'flask-docker-test' 
+              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+
+
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : dgumbo-python-flask'
             inputs:
