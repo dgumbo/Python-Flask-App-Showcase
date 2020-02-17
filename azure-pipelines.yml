@@ -44,14 +44,16 @@ stages:
         python -m venv antenv
         source antenv/bin/activate
         python -m pip install --upgrade pip 
+      displayName: "Prepare Environment"
       workingDirectory: $(projectRoot)
-      displayName: "Setup Environment"
     
-    - script: | 
-        pip install setup
-        pip install -r requirements.txt
+    - script: pip install setup
+      displayName: "Setup Environment"
       workingDirectory: $(projectRoot)
-      displayName: "Install requirements in environemt"
+    
+    - script: pip install -r requirements.txt
+      displayName: "Install requirements"
+      workingDirectory: $(projectRoot)
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
