@@ -49,9 +49,9 @@ stages:
       displayName: "Prepare Environment"
       workingDirectory: $(projectRoot)
     
-    # - script: pip install setup
-    #   displayName: "Setup Environment"
-    #   workingDirectory: $(projectRoot)
+    - script: pip install setup
+      displayName: "Setup Environment"
+      workingDirectory: $(projectRoot)
     
     - script: pip install -r requirements.txt
       displayName: "Install Requirements"
@@ -76,6 +76,7 @@ stages:
   condition: succeeded()
   jobs:
   - deployment: DeploymentToTest
+    displayName: 'Deployement Job - Test'
     pool:
       vmImage: $(vmImageName)
     environment: $(environmentName)
@@ -113,7 +114,8 @@ stages:
       )
     )
   jobs:
-  - deployment: DeploymentToproduction
+  - deployment: DeploymentToProdJob
+    displayName: 'Deployement Job - Production'
     pool:
       vmImage: $(vmImageName)
     environment: $(environmentName)
