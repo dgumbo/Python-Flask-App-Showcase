@@ -49,9 +49,9 @@ stages:
       displayName: "Prepare Environment"
       workingDirectory: $(projectRoot)
     
-    - script: pip install setup
-      displayName: "Setup Environment"
-      workingDirectory: $(projectRoot)
+    # - script: pip install setup
+    #   displayName: "Setup Environment"
+    #   workingDirectory: $(projectRoot)
     
     - script: pip install -r requirements.txt
       displayName: "Install Requirements"
