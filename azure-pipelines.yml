@@ -63,6 +63,7 @@ stages:
 
 
     - script: |
+        source antenv/bin/activate
         python
         from flask import Flask, render_template, request, redirect
         from flask_bootstrap import Bootstrap
