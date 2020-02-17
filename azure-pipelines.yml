@@ -13,7 +13,8 @@ variables:
   azureServiceConnectionId: '58e7659c-72cd-4694-b651-a5d67aed9ce6'
   
   # Web app name
-  webAppName: 'dgumbo-python-flask'
+  testWebAppName: 'dgumbo-python-flask'
+  productionWebAppName: 'invoicecrm'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -72,6 +73,33 @@ stages:
 - stage: DeployTest
   displayName: 'Deploy to Test Web App'
   dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - deployment: DeploymentToTest
+    pool:
+      vmImage: $(vmImageName)
+    environment: $(environmentName)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '$(pythonVersion)'
+            displayName: 'Use Python version'
+
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App : dgumbo-python-flask'
+            inputs:
+              azureSubscription: $(azureServiceConnectionId)
+              appName: $(testWebAppName)
+              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+
+
+- stage: DeployProd
+  displayName: 'Deploy to Production Web App'
+  dependsOn: DeployTest
   condition: |
     and (
       succeeded(),
@@ -85,7 +113,7 @@ stages:
       )
     )
   jobs:
-  - deployment: DeploymentJob
+  - deployment: DeploymentToproduction
     pool:
       vmImage: $(vmImageName)
     environment: $(environmentName)
@@ -103,32 +131,5 @@ stages:
             displayName: 'Deploy Azure Web App : dgumbo-python-flask'
             inputs:
               azureSubscription: $(azureServiceConnectionId)
-              appName: $(webAppName)
-              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-
-
-- stage: DeployProd
-  displayName: 'Deploy to Production Web App'
-  dependsOn: DeployTest
-  condition: succeeded()
-  jobs:
-  - deployment: DeploymentJob
-    pool:
-      vmImage: $(vmImageName)
-    environment: $(environmentName)
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          
-          - task: UsePythonVersion@0
-            inputs:
-              versionSpec: '$(pythonVersion)'
-            displayName: 'Use Python version'
-
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App : dgumbo-python-flask'
-            inputs:
-              azureSubscription: $(azureServiceConnectionId)
-              appName: $(webAppName)
+              appName: $(productionWebAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
