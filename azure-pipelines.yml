@@ -105,6 +105,7 @@ stages:
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
 
               
+              
           # - task: AzureCLI@2
           #   inputs:
           #     azureSubscription: $(azureServiceConnectionId) # 'Visual Studio Enterprise Subscription – MPN (6cc72829-3201-4e65-944f-2d9bbe848ab3)'
