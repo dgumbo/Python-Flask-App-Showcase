@@ -1,4 +1,6 @@
 *.PublishSettings
+.vs
+.vscode
 .vs/
 .vscode/
 
