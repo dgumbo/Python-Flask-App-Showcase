@@ -69,9 +69,47 @@ stages:
       displayName: 'Upload package'
       artifact: drop
 
-- stage: Deploy
-  displayName: 'Deploy Web App'
+- stage: DeployTest
+  displayName: 'Deploy to Test Web App'
   dependsOn: Build
+  condition: |
+    and (
+      succeeded(),
+      or (
+        and ( 
+          eq(variables['Build.Reason'], 'PullRequest'),
+          eq(variables['System.PullRequest.TargetBranch'], 'master')
+        ),        
+        eq(variables['Build.SourceBranch'], 'refs/heads/master'),        
+        eq(variables['Build.SourceBranch'], 'refs/heads/deploy')
+      )
+    )
+  jobs:
+  - deployment: DeploymentJob
+    pool:
+      vmImage: $(vmImageName)
+    environment: $(environmentName)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '$(pythonVersion)'
+            displayName: 'Use Python version'
+
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App : dgumbo-python-flask'
+            inputs:
+              azureSubscription: $(azureServiceConnectionId)
+              appName: $(webAppName)
+              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+
+
+- stage: DeployProd
+  displayName: 'Deploy to Production Web App'
+  dependsOn: DeployTest
   condition: succeeded()
   jobs:
   - deployment: DeploymentJob
