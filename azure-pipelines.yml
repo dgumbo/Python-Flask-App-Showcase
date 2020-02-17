@@ -12,6 +12,7 @@ variables:
   # Azure Resource Manager connection created during pipeline creation
   azureServiceConnectionId: '58e7659c-72cd-4694-b651-a5d67aed9ce6'
   #azureSubscriptionID: ${azureSubscriptionID} #From Pipeline Variables
+  prodAzureServiceConnectionId: '6cc72829-3201-4e65-944f-2d9bbe848ab3'
   
   # Web app name
   testWebAppName: 'dgumbo-python-flask'
@@ -133,6 +134,7 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : dgumbo-python-flask'
             inputs:
-              azureSubscription: $(azureSubscriptionID)
+              # azureSubscription: $(azureSubscriptionID)
+              azureSubscription: $(prodAzureServiceConnectionId)
               appName: $(productionWebAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
