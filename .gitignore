@@ -3,6 +3,7 @@
 .vscode
 .vs/
 .vscode/
+*.sqlite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
