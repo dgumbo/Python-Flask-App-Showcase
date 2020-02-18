@@ -1,10 +1,14 @@
-from products.models.Product import Product
-from products.models.Service import Service
+from masters.models.Product import Product
+from masters.models.Service import Service
+from common.service.Generic_Service import GenericService
 
-class ProductsService:
+class ProductsService(GenericService):
+
+    def __init__(self):
+        GenericService.__init__(self)
 
     def create_product(self, product):        
-        return Product("Test User1", "Passwor1")
+        return Product() #"Test User1", "Passwor1")
  
     def update_product(self, product, id):        
         return Product() #"Test User1", "Passwor1")

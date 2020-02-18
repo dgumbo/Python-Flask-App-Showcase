@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+
+
+{% block title %}Invoice List - {{ super()}}{% endblock %}
+{% block content %}
+
+
+<div class="container">
+    <h1>Invoices</h1> 
+
+    <a href="{{api_root}}/create" class="btn btn-link"><i class="fa fa-plus"></i>Add Invoice</a> 
+    
+    <table class="table">
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+        {% for invoice in invoices %}
+        <tr>
+            <td> 
+                <a href="{{api_root}}/update/{{invoice.id}}" class="btn btn-link" title="Update - {{ invoice.name }}">
+                    <i class="fa fa-pencil-alt"></i>
+                </a>  
+                <a href="{{api_root}}/delete/{{invoice.id}}" class="btn btn-link" title="Delete - {{ invoice.name }}">
+                    <i class="fa fa-trash-alt"></i> 
+                </a> 
+            </td>
+            <td>{{ invoice.name }}</td>
+            <td>{{ invoice.description }}</td>
+            <td>{{ invoice.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>   
+
+    <a href="{{api_root}}/create" class="btn btn-link"><i class="fa fa-plus"></i>Add Invoice</a> 
+         
+</div>
+
+
+{% endblock %}

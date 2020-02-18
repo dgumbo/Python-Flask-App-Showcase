@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+
+
+{% block title %}Company List - {{ super()}}{% endblock %}
+{% block content %}
+
+
+<div class="container">
+    <h1>Companies</h1> 
+
+    <a href="{{company_api_root}}/create-company" class="btn btn-link"><i class="fa fa-plus"></i>Add Company</a> 
+    
+    <table class="table">
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+        {% for company in companies %}
+        <tr>
+            <td> 
+                <a href="{{company_api_root}}/create-company/update-company/{{company.id}}" class="btn btn-link" title="Update - {{ company.name }}">
+                    <i class="fa fa-pencil-alt"></i>
+                </a>  
+                <a href="{{company_api_root}}/create-company/delete-company/{{company.id}}" class="btn btn-link" title="Delete - {{ company.name }}">
+                    <i class="fa fa-trash-alt"></i> 
+                </a> 
+            </td>
+            <td>{{ company.name }}</td>
+            <td>{{ company.description }}</td>
+            <td>{{ company.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>   
+
+    <a href="{{company_api_root}}/create-company" class="btn btn-link"><i class="fa fa-plus"></i>Add Company</a> 
+         
+</div>
+
+
+{% endblock %}
