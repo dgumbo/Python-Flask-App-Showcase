@@ -7,29 +7,41 @@
 
 <div class="container">
     <h1>Users</h1>
-    <button class="btn btn-primary">New User</button> 
-    
+    <a href="{{api_root}}/signup" class="btn btn-link"><i class="fa fa-plus"></i> Add User</a> 
+     
     <table class="table">
         <tr>
-            <th>Action</th>
+            <th colspan="2">Action</th>
             <th>Email Adress</th>
+            <th>Joined</th>
             <th>Clients</th>
             <th>Addresses</th>
         </tr>
         {% for user in users %}
         <tr>
             <td>
-                <button class="btn btn-primary">Update</button>
-                <button class="btn btn-primary">Delete</button> 
+                <a href="{{api_root}}/update/{{user.id}}" class="btn btn-link" title="Update - {{ user.email }}">
+                    <i class="fa fa-pencil-alt"></i>
+                </a>  
+            </td>
+            <td>
+                <form action="{{api_root}}/delete" method="POST"> 
+                    <button type="submit" class="btn btn-link" title="Delete - {{ user.email }}">
+                        <i class="fa fa-trash-alt"></i> 
+                    </button> 
+                    <input name="delete_id" type="hidden" value="{{user.id}}" />
+                </form
+
             </td>
             <td>{{ user.email }}</td>
+            <td>{{ user.creation_time.strftime("%d %b, %Y, %H:%M:%S") }}</td>
             <td>{{ "0" }}</td>
             <td>{{ "0" }}</td>
         </tr>
         {% endfor %}
     </table>   
 
-    <button class="btn btn-primary">New User</button> 
+    <a href="{{api_root}}/signup" class="btn btn-link"><i class="fa fa-plus"></i> Add User</a> 
          
 </div>
 

@@ -1,19 +1,21 @@
-from auth.models.User import User
+from auth.models.User import User, db
+from common.db.Base_CRUD import BaseCrud
+from common.service.Generic_Service import GenericService
 
-class UserService:
-
-    def create_user(self, user):        
-        print (f"printing user on create user: {user['email']}") 
+class UserService (GenericService):
+  
+    def __init__(self):
+        crud = BaseCrud( User ) 
+        GenericService.__init__(self, crud ) #entityCrud : BaseCrud
+        # self.crud = BaseCrud( db, User )   
 
     def authenticate(self, user):
         pass
 
-    def get_all_users(self):
-        users = []
-        user1 = User("Test User1", "Passwor1")
-        user2 = User("Test User2", "Passwor1")
+    # def create_user(self, user):        
+    #     print (f"printing user on create user: {user['email']}") 
+ 
+    # def get_all_users(self):
+    #     users = self.crud.find_all() 
 
-        users.append(user1)
-        users.append(user2)
-
-        return users
+    #     return users
