@@ -4,12 +4,39 @@ from flask_fontawesome import FontAwesome
 # from common.db.db_conn import db_connection  
 
 # pip freeze > requirements.txt
+
+from flask_sqlalchemy import SQLAlchemy
+import os
+
+basedir = os.path.abspath(os.path.dirname(__file__))
  
 app = Flask(__name__)
 Bootstrap(app) 
 FontAwesome(app)
 
-# db = db_connection(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data.sqlite')}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+class Puppy(db.Model) :
+
+    id = db.Column(db.Integer, primary_key=True)   
+    active_status = db.Column(db.Integer)  
+    created_by = db.Column(db.String)   
+
+    def __init__(self, id=0, active_status=True, created_by=""):
+        self.id=id 
+        self.active_status=active_status 
+        self.created_by=created_by 
+        
+
+    def __repr__(self) :
+        classname = type(self)
+        return f"{classname} is {self.id}"
+
+
+
 
 # from common.models.Base_Entity import BaseEntity
 
