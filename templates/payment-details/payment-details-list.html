@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+
+
+{% block title %}Payment Detail List - {{ super()}}{% endblock %}
+{% block content %}
+
+
+<div class="container">
+    <h1>Payment Details</h1> 
+
+    <a href="{{payment_details_api_root}}/create-payment-detail" class="btn btn-link"><i class="fa fa-plus"></i>Add Payment Detail</a> 
+    
+    <table class="table">
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+        {% for payment_detail in payment_details %}
+        <tr>
+            <td> 
+                <a href="{{payment_details_api_root}}/create-payment-detail/update-payment-detail/{{payment_detail.id}}" class="btn btn-link" title="Update - {{ payment_detail.name }}">
+                    <i class="fa fa-pencil-alt"></i>
+                </a>  
+                <a href="{{payment_details_api_root}}/create-payment-detail/delete-payment-detail/{{payment_detail.id}}" class="btn btn-link" title="Delete - {{ payment_detail.name }}">
+                    <i class="fa fa-trash-alt"></i> 
+                </a> 
+            </td>
+            <td>{{ payment_detail.name }}</td>
+            <td>{{ payment_detail.description }}</td>
+            <td>{{ payment_detail.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>   
+
+    <a href="{{payment_details_api_root}}/create-payment-detail" class="btn btn-link"><i class="fa fa-plus"></i>Add Payment Detail</a> 
+         
+</div>
+
+
+{% endblock %}

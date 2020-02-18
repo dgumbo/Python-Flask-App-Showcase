@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+
+
+{% block title %}Client List - {{ super()}}{% endblock %}
+{% block content %}
+
+
+<div class="container">
+    <h1>Clients</h1> 
+
+    <a href="{{api_root}}/create" class="btn btn-link"><i class="fa fa-plus"></i>Add Client</a> 
+    
+    <table class="table">
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+        {% for client in clients %}
+        <tr>
+            <td> 
+                <a href="{{api_root}}/create-client/update-client/{{client.id}}" class="btn btn-link" title="Update - {{ client.name }}">
+                    <i class="fa fa-pencil-alt"></i>
+                </a>  
+                <a href="{{api_root}}/create-client/delete-client/{{client.id}}" class="btn btn-link" title="Delete - {{ client.name }}">
+                    <i class="fa fa-trash-alt"></i> 
+                </a> 
+            </td>
+            <td>{{ client.name }}</td>
+            <td>{{ client.description }}</td>
+            <td>{{ client.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>   
+
+    <a href="{{api_root}}/create" class="btn btn-link"><i class="fa fa-plus"></i>Add Client</a> 
+         
+</div>
+
+
+{% endblock %}
