@@ -1,4 +1,4 @@
-# pip freeze > requirements.txt
+# pip freeze > requirements.txt # Remove pyodbc
  
 import click
 from flask.cli import with_appcontext
