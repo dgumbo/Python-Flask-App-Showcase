@@ -5,13 +5,14 @@ from flask.cli import with_appcontext
 from flask import Flask, render_template, request, redirect
 from flask_bootstrap import Bootstrap
 from flask_fontawesome import FontAwesome  
+from flask_login import LoginManager
+from flask_login import login_required, login_user, logout_user
  
 from flask_sqlalchemy import SQLAlchemy
-#from common.db.db_conn_sqlite_dev import db
-from db_holder import db
+
+from db_holder import db, loginManager
  
-__version__ = (1, 0, 0, "dev")
-# db = SQLAlchemy() 
+__version__ = (1, 0, 0, "dev") 
 
 import os
 def create_app(test_config=None):
@@ -27,8 +28,8 @@ def create_app(test_config=None):
     # else:
     #     # load the test config if passed in
     #     app.config.update(test_config)
-
-    # db = CreateDBConn(app)
+ 
+ 
     basedir = os.path.abspath(os.path.dirname(__file__)) 
     app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data.sqlite')}"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -49,17 +50,10 @@ def create_app(test_config=None):
         init_db()
         return "DB Initialized" 
         
-    
-    from Puppy import Puppy
-    from common.db.Base_CRUD import BaseCrud
+     
     @app.route('/test')
-    def test(): 
-        crud = BaseCrud( db, Puppy ) 
-        all_puppies = crud.find_all()
-        print ( all_puppies )     
-        # sam = crud.create( Puppy("Sammy") )
-        # frank = crud.create( Puppy("Frankie") )  
-        
+    # @login_required
+    def test():               
         return "Test Complete !!"
 
     
@@ -83,6 +77,13 @@ def create_app(test_config=None):
 
     db.init_app(app)
     app.cli.add_command(init_db_command)
+
+
+    app.config['SECRET_KEY'] = 'mysecretkey'
+    # loginManager = LoginManager()
+    loginManager.login_view = '/auth/login'
+
+    loginManager.init_app(app)
 
     @app.errorhandler(404)
     def errorhandler(e):
