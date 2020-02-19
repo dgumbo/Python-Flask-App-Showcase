@@ -5,31 +5,43 @@
     <div class="container">
         <h1>Create New Payment Detail</h1>
         <p> </p>
-        <form class="form form-horizontal" action="{{payment_details_api_root}}/create-payment-detail" method="POST">
+  
+
+        <form class="form form-horizontal" action="{{api_root}}/create" method="POST">
             <div class="form-group row">
-                <label for="name" class="col col-2  col-form-label" >Name :</label>
+                <label for="acc_name" class="col col-2  col-form-label" >Account Name :</label>
                 <div class="col col-6">
-                    <input id="name" name="name" type="text" class="form-control"/>
+                    <input id="acc_name" name="acc_name" type="text" class="form-control"/>
                 </div>
             </div> 
             
             <div class="form-group row">
-                <label for="description" class="col col-2  col-form-label" >Description :</label>
+                <label for="bank_name" class="col col-2  col-form-label" >Bank name :</label>
                 <div class="col col-6">
-                    <input id="description" name="description" type="text" class="form-control"/>
+                    <input id="bank_name" name="bank_name" type="text" class="form-control"/>
                 </div>
             </div> 
             
             <div class="form-group row">
-                <label for="price" class="col col-2  col-form-label" >Price :</label>
+                <label for="sort_code" class="col col-2  col-form-label" >Sort code :</label>
                 <div class="col col-6">
-                    <input id="price" name="price" type="number" class="form-control"/>
+                    <input id="sort_code" name="sort_code" type="number" minlength="6"  maxlength="6" class="form-control"/>
                 </div>
             </div> 
             
             <div class="form-group row">
-                <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Create</button>
+                <label for="acc_number" class="col col-2  col-form-label" >Accout number :</label>
+                <div class="col col-6">
+                    <input id="acc_number" name="acc_number" type="number" minlength="8"  maxlength="8" class="form-control"/>
+                </div>
+            </div> 
+            
+            <div class="form-group row">
+                <div class="col-sm-6 text-center">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+                <div class="col-sm-6">
+                    <a href="{{api_root}}" class="btn btn-danger">Cancel</a>
                 </div>
             </div>
         </form>

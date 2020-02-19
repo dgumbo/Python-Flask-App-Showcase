@@ -1,27 +1,33 @@
-from flask_sqlalchemy import SQLAlchemy
+from db_holder import db
+from datetime import datetime
 
-db = SQLAlchemy()
-
-class BaseEntity( db.Model ):
+class BaseEntity(): 
 
     id = db.Column(db.Integer, primary_key=True)   
-    active_status = db.Column(db.Integer)  
-    created_by = db.Column(db.String)  
-    creation_time = db.Column(db.String)  
-    updated_by = db.Column(db.String)  
-    update_time = db.Column(db.String)  
+    active_status = db.Column(db.Boolean, nullable=False)  
+    created_by = db.Column(db.String, nullable=False)  
+    creation_time = db.Column(db.DateTime, nullable=False)  
+    updated_by = db.Column(db.String, nullable=False)  
+    update_time = db.Column(db.DateTime, nullable=False)  
 
-    def __init__(self, id=0, active_status=True, created_by="", creation_time="", updated_by="", update_time=""):
-        self.id=id 
-        self.active_status=active_status 
-        self.created_by=created_by
-        self.creation_time=creation_time
-        self.updated_by=updated_by
-        self.update_time=update_time
-        
+
+    def __init__(self ):
+        self.active_status = True  
+
 
     def __repr__(self) :
-        classname = type(self)
-        return f"{classname} is {self.id}"
+        classname = self.__class__.__name__
+        return f"{classname}, ID : {self.id}, Active Status : {self.active_status}, Created by : {self.created_by}, on : {self.creation_time}"
 
 
+    def pre_update(self): 
+        now = datetime.now()
+        if self.created_by == None :
+            self.created_by = ""
+        if self.creation_time == None :
+            self.creation_time = now  
+        if self.updated_by == None :
+            self.updated_by = ""
+        if self.update_time == None :
+            self.update_time = now 
+ 
