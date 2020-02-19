@@ -1,21 +1,27 @@
 from common.models.Base_Entity import BaseEntity, db
 
 class Company(BaseEntity, db.Model):
-     
-    def __init__(self):
-        BaseEntity(self)
-
-        
       
-    acc_name = db.Column(db.String(64), nullable=False)   
-    bank_name = db.Column(db.String(64), nullable=False)   
-    sort_code = db.Column(db.String(6), nullable=False)   
-    acc_number = db.Column(db.String(8), nullable=False)  
+    trading_name = db.Column(db.String(64), nullable=False)   
+    contact_person = db.Column(db.String(64) )   
+    email = db.Column(db.String(50) )   
+    phone = db.Column(db.String(25), nullable=False)  
+    address_ln_1 = db.Column(db.String(100), nullable=False)  
+    address_ln_2 = db.Column(db.String(100) )  
+    city = db.Column(db.String(50), nullable=False)  
+    postal_code = db.Column(db.String(15) )   
+    
 
-    def __init__(self, acc_name, bank_name, sort_code, acc_number):
+    def __init__(self, trading_name, contact_person, email, phone, address_ln_1, address_ln_2, city, postal_code):
         BaseEntity.__init__(self) 
         
-        self. acc_name = acc_name
-        self.bank_name = bank_name
-        self.sort_code = sort_code
-        self.acc_number = acc_number
+        self.trading_name=trading_name
+        self.contact_person=contact_person
+        self.email=email
+        self.phone=phone
+        self.address_ln_1=address_ln_1
+        self.address_ln_2=address_ln_2
+        self.city=city
+        self.postal_code=postal_code
+
+        

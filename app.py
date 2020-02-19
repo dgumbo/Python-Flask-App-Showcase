@@ -63,8 +63,8 @@ def create_app(test_config=None):
     from masters.api.Payment_Details_Api import payment_details_api
     app.register_blueprint(payment_details_api, url_prefix='/payment-details')
     
-    # from masters.api.Company_Api import company_api
-    # app.register_blueprint(company_api, url_prefix='/company-setup')
+    from masters.api.Company_Api import company_api
+    app.register_blueprint(company_api, url_prefix='/company-setup')
 
     # from masters.api.Products_Services_Api import products_and_services_api
     # app.register_blueprint(products_and_services_api, url_prefix='/products-services')
