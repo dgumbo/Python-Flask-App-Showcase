@@ -59,15 +59,15 @@ def create_app(test_config=None):
     
     from auth.api.Auth_Api import auth_api
     app.register_blueprint(auth_api, url_prefix='/auth')
-    
-    # from masters.api.Products_Services_Api import products_and_services_api
-    # app.register_blueprint(products_and_services_api, url_prefix='/products-services')
+     
+    from masters.api.Payment_Details_Api import payment_details_api
+    app.register_blueprint(payment_details_api, url_prefix='/payment-details')
     
     # from masters.api.Company_Api import company_api
     # app.register_blueprint(company_api, url_prefix='/company-setup')
-    
-    # from masters.api.Payment_Details_Api import payment_details_api
-    # app.register_blueprint(payment_details_api, url_prefix='/payment-details')
+
+    # from masters.api.Products_Services_Api import products_and_services_api
+    # app.register_blueprint(products_and_services_api, url_prefix='/products-services')
     
     # from invoice.api.Invoice_Api import invoice_api
     # app.register_blueprint(invoice_api, url_prefix='/invoices')
@@ -92,14 +92,11 @@ def create_app(test_config=None):
     return app
 
 
-def init_db():
-    print("\n\n\n\nDatabase is Initialising !!!!!!\n\n")
+def init_db(): 
     
     print (db.get_binds())
     # db.drop_all()
-    db.create_all()
-    
-    print("\n\n\n\n")
+    db.create_all() 
 
 
 @click.command("init-db")
@@ -108,10 +105,9 @@ def init_db_command():
     """Clear existing data and create new tables."""
     init_db()
     click.echo("Initialized the database.")
-
-
+ 
 
 if __name__ == "__main__" : 
-    print("\n\n\n\n\nStarting App !!!!!!\n\n\n\n\n") 
+    print("\n\nStarting App!\n\n") 
     app = create_app()
     app.run(debug=True) 

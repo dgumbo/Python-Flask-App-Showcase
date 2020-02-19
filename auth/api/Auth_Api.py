@@ -62,7 +62,7 @@ def handle_signup():
 
     return redirect( f'{api_root}/login' )
     
-@login_required
+@login_required 
 @auth_api.route('/delete', methods=['POST'])
 def handle_delete(): 
     data = request.form

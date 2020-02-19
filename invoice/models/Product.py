@@ -1,6 +1,6 @@
-from common.models.Base_Entity import BaseEntity
+from common.models.Base_Entity import BaseEntity, db
 
-class Product(BaseEntity):
+class Product(BaseEntity, db.Model):
      
     def __init__(self):
         BaseEntity(self)
