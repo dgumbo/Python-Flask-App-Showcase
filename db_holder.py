@@ -20,13 +20,11 @@ def config_db_settings_sqlite(app):
 from sqlalchemy import create_engine
 
 
-
 def config_db_settings_mssql(app):       
     db_server="denzil.database.windows.net"
     db_username="denzil"
     db_password="Shorgan01"
-    db_name = "python-flask-test"
-    # db_driver = 'SQL Server Native Client 11.0'
+    db_name = "python-flask-test" 
     db_driver = '{SQL Server}' 
 
     # Configure Database URI: 
