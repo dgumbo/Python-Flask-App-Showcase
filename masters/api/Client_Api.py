@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect
-from clients.services.Client_Service import ClientService 
+from masters.services import ClientService 
    
 client_api = Blueprint('client_api', __name__) 
 

@@ -51,8 +51,11 @@ def signup():
     
 @auth_api.route('/init-test-user', methods=['GET'])
 def init_test_user():
-    user = User("testuser@testcompany.co.uk", "testuser@testcompany.co.uk", "Password1")
-    userService.create(user)
+    user = userService.find_user_by_username("testuser@testcompany.co.uk")
+    if user == None:
+        user = User("testuser@testcompany.co.uk", "testuser@testcompany.co.uk", "Password1")
+        userService.create(user)
+        
     return redirect("/") 
     
 

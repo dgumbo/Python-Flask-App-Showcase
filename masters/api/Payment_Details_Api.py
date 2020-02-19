@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect
-from masters.services.Payment_Details_Service import PaymentDetailsService 
+from masters.services import PaymentDetailsService 
 from masters.models.Payment_Detail import PaymentDetail 
 
 from flask_login.utils import _get_user

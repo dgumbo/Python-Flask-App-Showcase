@@ -45,7 +45,7 @@ class UserService (GenericService):
             return None 
 
  
-    def find_user_by_username(self, email ) -> User:
+    def find_user_by_username(self, username ) -> User:
         users = User.query.filter_by(username=username) 
         users = users.all()
  

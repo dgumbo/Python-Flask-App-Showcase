@@ -1,32 +1,11 @@
-from masters.models.Company import Company 
 from common.service.Generic_Service import GenericService
+from common.db.Base_CRUD import BaseCrud
 
-class InvoiceService(GenericService):
+from invoice.models.Invoice import Invoice 
 
-    def __init__(self):
-        GenericService.__init__(self)
+class InvoiceService(GenericService): 
 
-    # def create_company(self, company):    
-    #     company2 = Company()    
-    #     return company2 # "Test User1", "Passwor1")
- 
-    # def update_company(self, company, id):        
-    #     return Company() # "Test User1", "Passwor1")
- 
-    # def delete_company(self, company):        
-    #     print (f"printing user on create user:  ") 
- 
-    # def find_company(self, id):        
-    #     return Company() #"Test User1", "Passwor1")
-
-       
-    # def get_all_companies(self) :
-    #     Companies = []
-    #     Company1 = Company() #"Test User1", "Passwor1")
-    #     Company2 = Company() #"Test User2", "Passwor1")
-
-    #     Companies.append(Company1)
-    #     Companies.append(Company2)
-
-    #     return Companies
-         
+    def __init__(self): 
+        crud = BaseCrud( Invoice ) 
+        GenericService.__init__(self, crud ) #entityCrud : BaseCrud
+        self.crud = BaseCrud(  Invoice ) 

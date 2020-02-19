@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect
-from masters.services.Company_Service import CompanyService 
+from masters.services import CompanyService 
 from masters.models.Company import Company
    
 company_api = Blueprint('company_api', __name__) 
