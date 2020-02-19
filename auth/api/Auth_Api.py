@@ -47,6 +47,13 @@ def handle_login():
 @auth_api.route('/signup', methods=['GET'])
 def signup():
     return render_template(f"{template_folder}/signup.html", api_root=api_root)
+
+    
+@auth_api.route('/init-test-user', methods=['GET'])
+def init_test_user():
+    user = User("testuser@testcompany.co.uk", "testuser@testcompany.co.uk", "Password1")
+    userService.create(user)
+    return redirect("/") 
     
 
 @auth_api.route('/signup', methods=['POST'])

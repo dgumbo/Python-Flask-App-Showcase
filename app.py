@@ -48,7 +48,7 @@ def create_app(test_config=None):
     @app.route('/init-db')
     def init_db_handler():
         init_db()
-        return "DB Initialized" 
+        return redirect("/auth/init-test-user")
         
      
     @app.route('/test')

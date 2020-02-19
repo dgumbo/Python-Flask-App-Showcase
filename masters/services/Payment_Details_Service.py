@@ -10,6 +10,9 @@ class PaymentDetailsService(GenericService):
         self.crud = BaseCrud(  PaymentDetail )   
          
 
+
+
+
 # acc_name
 # bank_name
 # sort_code

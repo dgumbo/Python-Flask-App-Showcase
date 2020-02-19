@@ -1,7 +1,15 @@
 from flask import Blueprint, render_template, request, redirect
 from masters.services.Products_Service import ProductsService 
    
+from flask_login.utils import _get_user
+
 products_and_services_api = Blueprint('products_and_services_api', __name__) 
+
+@products_and_services_api.before_request
+def restrict_to_logged_in_users(): 
+    logged_in_user = _get_user() 
+    if logged_in_user == None or logged_in_user.is_authenticated == False:
+        return redirect('/auth/login')
 
 productsService = ProductsService()
 
