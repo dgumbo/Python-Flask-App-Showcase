@@ -20,7 +20,7 @@ def config_db_settings_sqlite(app):
 from sqlalchemy import create_engine
 
 
-def config_db_settings_mssql(app):       
+def config_init_db_mssql(app):       
     db_server="denzil.database.windows.net"
     db_username="denzil"
     db_password="Shorgan01"

@@ -11,7 +11,7 @@ from flask_login import login_required, login_user, logout_user
  
 from flask_sqlalchemy import SQLAlchemy
 
-from db_holder import config_db_settings_mssql, db, loginManager
+from db_holder import config_init_db_mssql, db, loginManager
  
 __version__ = (1, 0, 0, "dev") 
 
@@ -19,7 +19,7 @@ def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__, instance_relative_config=True)
 
-    config_db_settings_mssql(app)
+    config_init_db_mssql(app)
 
     Bootstrap(app) 
     FontAwesome(app)
@@ -84,20 +84,20 @@ def create_app(test_config=None):
         return render_template("error-handler/not-found-handler.html", error=e)
 
         
-    @app.cli.command('initdb')
-    def init_db_command_1():
-        """Clear existing data and create new tables."""
-        print("\n\n\n@app.cli.command('initdb')\n""Clear existing data and create new tables.""\n\n\n\n")
-        init_db()
-        click.echo("Initialized the database.")
+    # @app.cli.command('initdb')
+    # def init_db_command_1():
+    #     """Clear existing data and create new tables."""
+    #     print("\n\n\n@app.cli.command('initdb')\n""Clear existing data and create new tables.""\n\n\n\n")
+    #     init_db()
+    #     click.echo("Initialized the database.")
 
 
-    @app.cli.command() 
-    def initdb():
-        """Clear existing data and create new tables."""
-        print("\n\n\n@app.cli.command()\n""Clear existing data and create new tables.""\n\n\n\n")
-        init_db()
-        click.echo("Initialized the database.")
+    # @app.cli.command() 
+    # def initdb():
+    #     """Clear existing data and create new tables."""
+    #     print("\n\n\n@app.cli.command()\n""Clear existing data and create new tables.""\n\n\n\n")
+    #     init_db()
+    #     click.echo("Initialized the database.")
          
     return app
 
@@ -109,13 +109,13 @@ def init_db():
     db.create_all() 
 
 
-@click.command("init-db")
-@with_appcontext
-def init_db_command():
-    """Clear existing data and create new tables."""
-    print("\n\n\n@click.command('init-db')\n""Clear existing data and create new tables.""\n\n\n\n")
-    init_db()
-    click.echo("Initialized the database.")
+# @click.command("init-db")
+# @with_appcontext
+# def init_db_command():
+#     """Clear existing data and create new tables."""
+#     print("\n\n\n@click.command('init-db')\n""Clear existing data and create new tables.""\n\n\n\n")
+#     init_db()
+#     click.echo("Initialized the database.")
 
 
  
