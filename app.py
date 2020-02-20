@@ -17,7 +17,7 @@ __version__ = (1, 0, 0, "dev")
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__) #, instance_relative_config=True)
 
     config_init_db_mssql(app)
 
@@ -63,8 +63,7 @@ def create_app(test_config=None):
     app.register_blueprint(client_api, url_prefix='/clients')
 
     db.init_app(app)
-    app.cli.add_command(init_db_command)
-
+    # app.cli.add_command(init_db_command)
 
     app.config['SECRET_KEY'] = 'mysecretkey'
     # loginManager = LoginManager()
