@@ -17,76 +17,76 @@ from db_holder import config_init_db_mssql, db, loginManager
  
 __version__ = (1, 0, 0, "dev") 
 
-# def create_app(test_config=None):
-"""Create and configure an instance of the Flask application."""
-app = Flask(__name__) #, instance_relative_config=True)
+def create_app(test_config=None):
+    """Create and configure an instance of the Flask application."""
+    app = Flask(__name__) #, instance_relative_config=True)
 
-config_init_db_mssql(app)
+    config_init_db_mssql(app)
 
-Bootstrap(app) 
-FontAwesome(app)
+    Bootstrap(app) 
+    FontAwesome(app)
 
-# if test_config is None:
-#     # load the instance config, if it exists, when not testing
-#     app.config.from_pyfile("config.py", silent=True)
-# else:
-#     # load the test config if passed in
-#     app.config.update(test_config)
-
-
-    
-@app.route( '/home' )
-def home():
-    return redirect("/")
-    
-@app.route( '/' )
-def index():
-    return render_template("home.html")
+    # if test_config is None:
+    #     # load the instance config, if it exists, when not testing
+    #     app.config.from_pyfile("config.py", silent=True)
+    # else:
+    #     # load the test config if passed in
+    #     app.config.update(test_config)
 
 
-@app.route('/init-db')
-def init_db_handler():
-    init_db()
-    return redirect("/auth/init-test-user")
         
+    @app.route( '/home' )
+    def home():
+        return redirect("/")
+        
+    @app.route( '/' )
+    def index():
+        return render_template("home.html")
 
-from auth.api.Auth_Api import auth_api
-app.register_blueprint(auth_api, url_prefix='/auth')
-    
-from masters.api.Payment_Details_Api import payment_details_api
-app.register_blueprint(payment_details_api, url_prefix='/payment-details')
 
-from masters.api.Company_Api import company_api
-app.register_blueprint(company_api, url_prefix='/company-setup')
+    @app.route('/init-db')
+    def init_db_handler():
+        init_db()
+        return redirect("/auth/init-test-user")
+            
 
-from masters.api.Products_Services_Api import products_and_services_api
-app.register_blueprint(products_and_services_api, url_prefix='/products-services')
+    from auth.api.Auth_Api import auth_api
+    app.register_blueprint(auth_api, url_prefix='/auth')
+        
+    from masters.api.Payment_Details_Api import payment_details_api
+    app.register_blueprint(payment_details_api, url_prefix='/payment-details')
 
-from invoice.api.Invoice_Api import invoice_api
-app.register_blueprint(invoice_api, url_prefix='/invoices')
+    from masters.api.Company_Api import company_api
+    app.register_blueprint(company_api, url_prefix='/company-setup')
 
-from masters.api.Client_Api import client_api
-app.register_blueprint(client_api, url_prefix='/clients')
+    from masters.api.Products_Services_Api import products_and_services_api
+    app.register_blueprint(products_and_services_api, url_prefix='/products-services')
 
-db.init_app(app)
-# app.cli.add_command(init_db_command)
+    from invoice.api.Invoice_Api import invoice_api
+    app.register_blueprint(invoice_api, url_prefix='/invoices')
 
-app.config['SECRET_KEY'] = 'mysecretkey'
-# loginManager = LoginManager()
-loginManager.login_view = '/auth/login'
+    from masters.api.Client_Api import client_api
+    app.register_blueprint(client_api, url_prefix='/clients')
 
-loginManager.init_app(app)
+    db.init_app(app)
+    # app.cli.add_command(init_db_command)
 
-@app.errorhandler(404)
-def errorhandler(e):
-    return render_template("error-handler/not-found-handler.html", error=e)
+    app.config['SECRET_KEY'] = 'mysecretkey'
+    # loginManager = LoginManager()
+    loginManager.login_view = '/auth/login'
 
-# @app.errorhandler(sqlalchemy.exc.OperationalError)
-# def errorhandler_sql(e):
-#     print('\n\n\n\n\n\n\n Thank you Jesus \n\n\n\n\n\n\n\n\n')
-#     return render_template("error-handler/not-found-handler.html", error=e)
+    loginManager.init_app(app)
+
+    @app.errorhandler(404)
+    def errorhandler(e):
+        return render_template("error-handler/not-found-handler.html", error=e)
+
+    # @app.errorhandler(sqlalchemy.exc.OperationalError)
+    # def errorhandler_sql(e):
+    #     print('\n\n\n\n\n\n\n Thank you Jesus \n\n\n\n\n\n\n\n\n')
+    #     return render_template("error-handler/not-found-handler.html", error=e)
          
-    # return app
+    return app
 
         
     # @app.cli.command('initdb')
@@ -127,6 +127,6 @@ def init_db():
 
 if __name__ == "__main__" : 
     print("\n*  Starting App!\n") 
-    # app = create_app()
+    app = create_app()
     
     app.run(debug=True) 
