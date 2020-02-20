@@ -36,7 +36,7 @@ FontAwesome(app)
 
     
 @app.route( '/home' )
-def index():
+def home():
     return redirect("/")
     
 @app.route( '/' )
