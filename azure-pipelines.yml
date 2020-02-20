@@ -1,4 +1,5 @@
-# pip freeze > requirements.txt # Remove pyodbc
+# pip freeze > requirements.txt
+
 # Python to Linux Web App on Azure
 # Build your Python project and deploy it to Azure as a Linux Web App.
 # Change python version to one thats appropriate for your application.
