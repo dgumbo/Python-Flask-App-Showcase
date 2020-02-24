@@ -6,34 +6,229 @@
         <h1>Create New Invoice</h1>
         <p> </p>
         <form class="form form-horizontal" action="{{api_root}}/create" method="POST">
+      
             <div class="form-group row">
-                <label for="name" class="col col-2  col-form-label" >Name :</label>
+                <label for="company_id" class="col col-3  col-form-label" >Select Invoice Trading Company :</label>
                 <div class="col col-6">
-                    <input id="name" name="name" type="text" class="form-control"/>
+                    <select required name="company_id" id="company_id" class="form-control">
+                        {% for company in user.companies %}
+                            <option value="{{ company.id }}">{{ company.name }} - {{ company.postal_code }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div> 
             
+
             <div class="form-group row">
-                <label for="description" class="col col-2  col-form-label" >Description :</label>
+                <label for="payment_detail_id" class="col col-3  col-form-label" >Select Payment Details :</label>
                 <div class="col col-6">
-                    <input id="description" name="description" type="text" class="form-control"/>
+                    <select required name="payment_detail_id" id="payment_detail_id" class="form-control">
+                        {% for payment_detail in user.payment_details %}
+                            <option value="{{ payment_detail.id }}">{{ payment_detail.acc_name }} - {{ payment_detail.bank_name }} - {{ payment_detail.acc_number }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div> 
-            
+
             <div class="form-group row">
-                <label for="price" class="col col-2  col-form-label" >Price :</label>
+                <label for="invoice_date" class="col col-3  col-form-label" >Effective Date :</label>
                 <div class="col col-6">
-                    <input id="price" name="price" type="number" class="form-control"/>
+                    <input required id="invoice_date" name="invoice_date" type="text" class="form-control datepicker"/> 
                 </div>
             </div> 
+             
+            <div class="card">
+                <div class="card-header"><strong>Add Services</strong></div>
+                <div class="card-body" id="selected_services_container" name="selected_services_container">  
+                      
+                </div>
+                <div class="card-footer row">
+                    <div class="col col-2 text-right">Select Service : </div>
+                    <div class="col col-6   ">
+                        <select required name="selected_service_id" id="selected_service_id" class="form-control">
+                            {% for service in user.services %}
+                                <option value="{{ service.id }}">{{ service.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <a onclick="ProccessAdd( 'Service', $('select#selected_service_id option:selected') );"
+                            class="btn btn-success" >
+                            Add
+                        </a>
+                    </div> 
+                </div>
+                <div class="card-footer row">
+                    <div class="col col-3 text-right"><strong>Sub-total for added services : </strong></div>
+                    <div class="col col-2"><input class="form-control services-sub-total" type="text" readonly="True" value="0"></div> 
+                </div>
+            </div>
+            <br/>
+
+            <div class="card">
+                <div class="card-header"><strong>Add Products</strong></div>
+                <div class="card-body" id="selected_products_container" name="selected_products_container">  
+
+                </div>
+                <div class="card-footer row">
+                    <div class="col col-2 text-right">Select Product : </div>
+                    <div class="col col-6   ">
+                        <select required name="selected_product_id" id="selected_product_id" class="form-control">
+                            {% for product in user.products %}
+                                <option value="{{ product.id }}"> {{ product.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <a onclick="ProccessAdd( 'Product', $('select#selected_product_id option:selected') );"
+                            class="btn btn-success" >
+                            Add
+                        </a>
+                    </div> 
+                </div>
+                <div class="card-footer row">
+                    <div class="col col-3 text-right"><strong>Sub-total for added products : </strong></div>
+                    <div class="col col-2"><input class="form-control products-sub-total" type="text" readonly="True" value="0"></div> 
+                </div>
+            </div>
+            <br/> 
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col col-2 text-right">
+                            <strong>Grand Total :</strong>
+                        </div>
+                        <div class="col col-4">
+                            <strong><label class="grand-total-label">0</label></strong>
+                        </div>
+                    </div> 
+                </div> 
+            </div>
+            <br/> 
             
             <div class="form-group row">
                 <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-primary" onclick="HandleCreate()">Create</button>
                 </div>
             </div>
         </form>
-    </div>
 
+        <!-- <br/> 
+        User<br/>{{ user }}<br/><br/>
+
+        Invoice<br/>{{ invoice }}<br/><br/>
+        
+        invoices<br/>{{ user.invoices }}<br/><br/>
+        companies<br/>{{ user.companies }}<br/><br/>
+        payment_details<br/>{{ user.payment_details }}<br/><br/>
+        services<br/>{{ user.services }}<br/><br/>
+        products<br/>{{ user.products }}<br/><br/>  -->
+
+    </div>
+<script>
+    function HandleCreate() {         
+       console.log(  $('select#company_id option:selected')  ) ;
+       console.log(  $('select#payment_detail_id option:selected')  ) ;
+       console.log(  $('invoice_date')  ) ;
+    }
+</script>
+
+<script> 
+    var services = [] ;
+    var products = [] ;
+    {% for service in user.services %}
+        services.push({id:{{service.id}}, name:"{{service.name}}", charge:{{service.charge}} }) ;
+    {% endfor %}
+    {% for product in user.products %}
+        products.push({id:{{product.id}}, name:"{{product.name}}", price:{{product.price}} }) ;
+    {% endfor %}
+    
+    var invoice = { invoice_lines : [] } ;
+    var user = '{{ user }}'; 
+
+    function ProccessAdd(service_product_selected_type, service_product_selected){  
+        var service_product_selected_id = Number(service_product_selected.val() ) ; 
+        
+        var new_svs_prod_line = "";
+        if (service_product_selected_type === "Service"){ 
+            selected_service = services.filter(s => s.id === service_product_selected_id)[0] ;  
+            
+            new_svs_prod_line = "<div class='row' id='svs_line_" + selected_service.id + "'> <div class='col col-1'><button type='button' class='btn btn-link' onclick='ProccessRemove( \"Service\", " + selected_service.id + ", \"svs_line_" + selected_service.id + "\" );' ><i class='fa fa-trash'></i></button></div> <div class='col col-5'>" + selected_service.name + "</div>  <div class='col col-2'>" + selected_service.charge + "</div> </div> " ;        
+            
+            $('#selected_services_container').append(new_svs_prod_line) ;
+
+            AddInvoiceLine( service_product_selected_type, service_product_selected_id, selected_service.charge)
+        }
+        else if (service_product_selected_type === "Product"){ 
+            selected_product = products.filter(p => p.id === service_product_selected_id)[0] ;  
+            
+            new_svs_prod_line = "<div class='row' id='prod_line_" + selected_product.id + "'> <div class='col col-1'><button type='button' class='btn btn-link' onclick='ProccessRemove( \"Product\", " + selected_product.id + ", \"prod_line_" + selected_product.id + "\" );' ><i class='fa fa-trash'></i></button></div> <div class='col col-5'>" + selected_product.name + "</div>  <div class='col col-2'>" + selected_product.price + "</div> </div> " ;        
+            
+            $('#selected_products_container').append(new_svs_prod_line) ; 
+
+            AddInvoiceLine( service_product_selected_type, service_product_selected_id, selected_product.price)
+        } 
+        
+        CalculateAndDisplayTotals();
+    }
+
+    function ProccessRemove(service_product_type, service_product_id, service_product_div_id ){  
+        var service_product_div = $('#' + service_product_div_id ); 
+
+        RemoveInvoiceLine( service_product_type, service_product_id )
+        
+        service_product_div.remove() ;   
+        
+        CalculateAndDisplayTotals();
+    }
+
+    function AddInvoiceLine(service_product_type, service_product_id, cost){
+        invoice_line = { cost:cost, service_id: null, product_id: null, service_product_type:service_product_type} ;
+        if (service_product_type === "Service"){
+            invoice_line.service_id = service_product_id; 
+        }
+        else if (service_product_type === "Product"){ 
+            invoice_line.product_id = service_product_id; 
+        }
+
+        invoice.invoice_lines.push(invoice_line);
+        
+        CalculateAndDisplayTotals();
+    }
+
+    function RemoveInvoiceLine(service_product_type, service_product_id){  
+        invoice_line_index = -1; 
+        
+        if (service_product_type === "Service")
+            invoice_line_index = invoice.invoice_lines.find(il => il.service_id === service_product_id )  ;  
+        
+        if (service_product_type === "Product")
+            invoice_line_index = invoice.invoice_lines.find(il => il.product_id === service_product_id )  ;  
+         
+        invoice.invoice_lines.splice(invoice_line_index, 1);
+        
+        CalculateAndDisplayTotals();
+    }
+
+    function CalculateAndDisplayTotals(){
+        var services_invoice_lines = invoice.invoice_lines.filter( il => il.service_product_type === "Service" ) ; 
+        var products_invoice_lines = invoice.invoice_lines.filter( il => il.service_product_type === "Product" ) ;  
+        
+        var services_invoice_lines_sub_total = 0;
+        var products_invoice_lines_sub_total = 0;
+
+        services_invoice_lines.forEach(ia => { services_invoice_lines_sub_total += ia.cost });
+        products_invoice_lines.forEach(ia => { products_invoice_lines_sub_total += ia.cost });
+
+        var grand_total = services_invoice_lines_sub_total + products_invoice_lines_sub_total ;
+ 
+        $('.services-sub-total').val(services_invoice_lines_sub_total) ;
+        $('.products-sub-total').val(products_invoice_lines_sub_total) ;
+        
+        $('.grand-total-label')[0].innerText =  grand_total  ;  
+    }
+
+  </script>
 
 {% endblock %}

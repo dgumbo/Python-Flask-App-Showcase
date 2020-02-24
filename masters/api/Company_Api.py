@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect
 from masters.services import CompanyService 
 from masters.models.Company import Company
+from flask_login.utils import _get_user
    
 company_api = Blueprint('company_api', __name__) 
 
@@ -33,7 +34,7 @@ def handle_create_company():
     city = data['city']
     postal_code = data['postal_code']
 
-    company = Company(trading_name, contact_person, email, phone, address_ln_1, address_ln_2, city, postal_code)
+    company = Company(_get_user(), trading_name, contact_person, email, phone, address_ln_1, address_ln_2, city, postal_code)
 
     companyService.create(company) 
     print("company was sucesifuly created")

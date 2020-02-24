@@ -6,6 +6,7 @@ from flask.cli import with_appcontext
 from flask import Flask, render_template, request, redirect
 from flask_bootstrap import Bootstrap
 from flask_fontawesome import FontAwesome  
+from flask_datepicker import datepicker
 from flask_login import LoginManager
 from flask_login import login_required, login_user, logout_user
  
@@ -25,6 +26,7 @@ config_init_db_mssql(app)
 
 Bootstrap(app) 
 FontAwesome(app)
+datepicker(app)
 
 # if test_config is None:
 #     # load the instance config, if it exists, when not testing
@@ -59,8 +61,11 @@ app.register_blueprint(payment_details_api, url_prefix='/payment-details')
 from masters.api.Company_Api import company_api
 app.register_blueprint(company_api, url_prefix='/company-setup')
 
-from masters.api.Products_Services_Api import products_and_services_api
-app.register_blueprint(products_and_services_api, url_prefix='/products-services')
+from masters.api.Products_Services_Api import products_api
+app.register_blueprint(products_api, url_prefix='/products')
+
+from masters.api.Products_Services_Api import services_api
+app.register_blueprint(services_api, url_prefix='/services')
 
 from invoice.api.Invoice_Api import invoice_api
 app.register_blueprint(invoice_api, url_prefix='/invoices')

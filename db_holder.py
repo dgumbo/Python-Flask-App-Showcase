@@ -21,9 +21,9 @@ from sqlalchemy import create_engine
 
 
 def config_init_db_mssql(app):       
-    db_server="denzil.database.windows.net"
+    db_server="denzil-test.database.windows.net"
     db_username="denzil"
-    db_password="Shorgan01"
+    db_password="Password1"
     db_name = "python-flask-test" 
     db_driver = '{SQL Server}' 
 

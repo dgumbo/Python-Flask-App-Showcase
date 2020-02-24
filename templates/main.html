@@ -2,7 +2,12 @@
 {% block title %}Python Flask Showcase Project{% endblock %}
 {% block head %}
     {{ super() }}
-    {{ fontawesome_html() }} 
+    {{ fontawesome_html() }}  
+{% endblock %}
+{% block scripts %}
+  {{ super() }}
+  {{ datepicker.loader() }}  
+  {{ datepicker.picker(id=".datepicker", dateFormat="dd MM yy" ) }}
 {% endblock %}
 
 {% block navbar %}  
@@ -33,17 +38,10 @@
                 <a class="nav-link dropdown-toggle" href="#" id="dd4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Setup</a>
                 <div class="dropdown-menu" aria-labelledby="dd4">  
                     <a class="dropdown-item" href="/company-setup">Company Setup</a> 
-                    <a class="dropdown-item" href="/payment-details">Payment Details</a>  
-                </div>
-            </li>
-            <li class="nav-item"> 
-                <a class="nav-link" href="/clients">Clients</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dd3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Service/Products</a>
-                <div class="dropdown-menu" aria-labelledby="dd3">  
-                    <a class="dropdown-item" href="/products-services/product-list">Product List</a> 
-                    <a class="dropdown-item" href="/products-services/service-list">Service List</a>  
+                    <a class="dropdown-item" href="/payment-details">Payment Details</a>   
+                    <a class="dropdown-item" href="/clients">Clients</a>
+                    <a class="dropdown-item" href="/products">Product List</a> 
+                    <a class="dropdown-item" href="/services">Service List</a>  
                 </div>
             </li>
             {% endif %}

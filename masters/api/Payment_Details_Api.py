@@ -37,7 +37,7 @@ def handle_create_payment_detail():
     sort_code = data['sort_code']
     acc_number = data['acc_number']
 
-    payment_detail = PaymentDetail(acc_name, bank_name, sort_code, acc_number)
+    payment_detail = PaymentDetail(_get_user(), acc_name, bank_name, sort_code, acc_number)
     paymentDetailService.create(payment_detail) 
     print("payment_detail was sucesifuly created")
     return redirect( f'{api_root}'  )
