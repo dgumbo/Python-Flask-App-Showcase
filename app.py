@@ -10,9 +10,9 @@ from flask_datepicker import datepicker
 from flask_login import LoginManager
 from flask_login import login_required, login_user, logout_user
  
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy 
 
-from db_holder import config_init_db_mssql, db, loginManager
+from db_holder import config_init_db, db, loginManager
 
 
  
@@ -22,7 +22,7 @@ __version__ = (1, 0, 0, "dev")
 """Create and configure an instance of the Flask application."""
 app = Flask(__name__) #, instance_relative_config=True)
 
-config_init_db_mssql(app)
+config_init_db(app)
 
 Bootstrap(app) 
 FontAwesome(app)
@@ -111,7 +111,7 @@ def errorhandler(e):
     #     init_db()
     #     click.echo("Initialized the database.")
          
-    return app
+    # return app
 
 
 def init_db(): 

@@ -9,7 +9,35 @@ db = SQLAlchemy()
 loginManager = LoginManager()
 
 
+# Get environment variables  
+DB_SERVER = os.environ['PY_FLASK_DB_SERVER']
+DB_USERNAME = os.environ['PY_FLASK_DB_USERNAME']
+DB_PASSWORD = os.environ['PY_FLASK_DB_PASSWORD']
+DB_NAME = os.environ['PY_FLASK_DB_NAME']
+
+ENVIRONMENT = os.environ.get('ENVIRONMENT')
+
+
+def config_init_db  (app): 
+    global db, ENVIRONMENT 
+
+    print ('\n\n\n\n')
+    print ('Environment Variables Initialised with below values')
+    print(DB_SERVER, "; ", DB_NAME, "; ", DB_USERNAME, "; ", DB_NAME )
+    print ("ENVIRONMENT :", ENVIRONMENT)
+    print ("\n\n\n\n")
+
+    if ENVIRONMENT == "Dev" :
+        config_init_db_mssql (app, DB_SERVER, DB_NAME, DB_USERNAME, DB_PASSWORD)
+    elif ENVIRONMENT == "Test" :
+        config_init_db_mssql (app, DB_SERVER, DB_NAME, DB_USERNAME, DB_PASSWORD)
+    elif ENVIRONMENT == "Prod" :
+        config_init_db_mssql (app, DB_SERVER, DB_NAME, DB_USERNAME, DB_PASSWORD)
+
+
 def config_db_settings_sqlite(app):    
+    global db
+
     basedir = os.path.abspath(os.path.dirname(__file__)) 
 
     app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data.sqlite')}"
@@ -20,11 +48,9 @@ def config_db_settings_sqlite(app):
 from sqlalchemy import create_engine
 
 
-def config_init_db_mssql(app):       
-    db_server="denzil-test.database.windows.net"
-    db_username="denzil"
-    db_password="Password1"
-    db_name = "python-flask-test" 
+def config_init_db_mssql(app, db_server, db_name, db_username, db_password ):   
+    global db       
+
     db_driver = '{SQL Server}' 
 
     # Configure Database URI: 
