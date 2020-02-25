@@ -127,10 +127,23 @@
 
     </div>
 <script>
+    
+    var invoice = { invoice_lines : [], company:{}, payment_detail:{} } ;
+    var user = '{{ user }}'; 
+
+</script>
+
+<script>
     function HandleCreate() {         
-       console.log(  $('select#company_id option:selected')  ) ;
-       console.log(  $('select#payment_detail_id option:selected')  ) ;
-       console.log(  $('invoice_date')  ) ;
+       var company_id = $('select#company_id option:selected').val() ;
+       var payment_detail_id = $('select#payment_detail_id option:selected').val()  ;
+       var invoice_date = $('#invoice_date').val() ;
+
+       invoice.company.id = company_id
+       invoice.payment_detail.id = payment_detail_id
+       invoice.invoice_date = invoice_date
+
+       console.log(invoice) ;
     }
 </script>
 
@@ -143,9 +156,6 @@
     {% for product in user.products %}
         products.push({id:{{product.id}}, name:"{{product.name}}", price:{{product.price}} }) ;
     {% endfor %}
-    
-    var invoice = { invoice_lines : [] } ;
-    var user = '{{ user }}'; 
 
     function ProccessAdd(service_product_selected_type, service_product_selected){  
         var service_product_selected_id = Number(service_product_selected.val() ) ; 
