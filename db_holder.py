@@ -22,8 +22,9 @@ def config_init_db  (app):
     global db, ENVIRONMENT 
 
     print ('\n\n\n\n')
-    print(DB_SERVER , DB_NAME  , DB_USERNAME  , DB_NAME )
-    print (ENVIRONMENT)
+    print ('Environment Variables Initialised with below values')
+    print(DB_SERVER, "; ", DB_NAME, "; ", DB_USERNAME, "; ", DB_NAME )
+    print ("ENVIRONMENT :", ENVIRONMENT)
     print ("\n\n\n\n")
 
     if ENVIRONMENT == "Dev" :
