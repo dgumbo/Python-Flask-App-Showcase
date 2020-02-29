@@ -4,7 +4,9 @@ import urllib.parse
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
-db = SQLAlchemy()
+# from sqlalchemy import create_engine
+
+db : SQLAlchemy 
 
 loginManager = LoginManager()
 
@@ -15,7 +17,7 @@ DB_USERNAME = os.environ['PY_FLASK_DB_USERNAME']
 DB_PASSWORD = os.environ['PY_FLASK_DB_PASSWORD']
 DB_NAME = os.environ['PY_FLASK_DB_NAME']
 
-ENVIRONMENT = os.environ.get('ENVIRONMENT')
+ENVIRONMENT = os.environ['ENVIRONMENT']
 
 
 def config_init_db  (app): 
@@ -23,7 +25,7 @@ def config_init_db  (app):
 
     print ('\n\n\n\n')
     print ('Environment Variables Initialised with below values')
-    print(DB_SERVER, "; ", DB_NAME, "; ", DB_USERNAME, "; ", DB_NAME )
+    print(DB_SERVER, "; ", DB_NAME, "; ", DB_USERNAME, "; ", DB_PASSWORD )
     print ("ENVIRONMENT :", ENVIRONMENT)
     print ("\n\n\n\n")
 
@@ -35,17 +37,16 @@ def config_init_db  (app):
         config_init_db_mssql (app, DB_SERVER, DB_NAME, DB_USERNAME, DB_PASSWORD)
 
 
-def config_db_settings_sqlite(app):    
-    global db
+# def config_db_settings_sqlite(app):    
+#     global db
 
-    basedir = os.path.abspath(os.path.dirname(__file__)) 
+#     basedir = os.path.abspath(os.path.dirname(__file__)) 
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data.sqlite')}"
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#     app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data.sqlite')}"
+#     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
-    db = SQLAlchemy(app)
+#     db = SQLAlchemy(app)
 
-from sqlalchemy import create_engine
 
 
 def config_init_db_mssql(app, db_server, db_name, db_username, db_password ):   
