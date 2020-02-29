@@ -6,6 +6,7 @@ from flask_login import LoginManager
 
 # from sqlalchemy import create_engine
 
+# global db 
 db = SQLAlchemy ()
 
 loginManager = LoginManager()
@@ -20,20 +21,15 @@ DB_NAME = os.environ['PY_FLASK_DB_NAME']
 ENVIRONMENT = os.environ['PY_ENVIRONMENT']
 
 
-def config_init_db  (app): 
-    global db, ENVIRONMENT 
+def config_init_db  (app):  
 
-    print ('\n\n\n\n')
-    print ('Environment Variables Initialised with below values')
-    print(DB_SERVER, "; ", DB_NAME, "; ", DB_USERNAME, "; ", DB_PASSWORD )
-    print ("ENVIRONMENT :", ENVIRONMENT)
-    print ("\n\n\n\n")
+    print('\n\n\nENVIRONMENT :', ENVIRONMENT.lower(), '\n\n\n')
 
-    if ENVIRONMENT == "Dev" :
+    if ENVIRONMENT.lower() == "Dev".lower() :
         config_init_db_mssql (app, DB_SERVER, DB_NAME, DB_USERNAME, DB_PASSWORD)
-    elif ENVIRONMENT == "Test" :
+    elif ENVIRONMENT.lower() == "Test".lower() :
         config_init_db_mssql (app, DB_SERVER, DB_NAME, DB_USERNAME, DB_PASSWORD)
-    elif ENVIRONMENT == "Prod" :
+    elif ENVIRONMENT.lower() == "Prod".lower() :
         config_init_db_mssql (app, DB_SERVER, DB_NAME, DB_USERNAME, DB_PASSWORD)
 
 
@@ -50,7 +46,7 @@ def config_init_db  (app):
 
 
 def config_init_db_mssql(app, db_server, db_name, db_username, db_password ):   
-    global db       
+    # global db       
 
     db_driver = '{SQL Server}' 
 
@@ -63,4 +59,10 @@ def config_init_db_mssql(app, db_server, db_name, db_username, db_password ):
     app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
     # extensions
-    db = SQLAlchemy(app)
+    db = SQLAlchemy(app) 
+
+    print ('\n\n\n\n')
+    print ('Environment Variables Initialised with below values')
+    print( db_driver, "; ", db_server, "; ", db_name, "; ", db_username, "; ", db_password )
+    print ("ENVIRONMENT :", ENVIRONMENT)
+    print ("\n\n\n\n")
