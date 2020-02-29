@@ -6,7 +6,7 @@ from flask_login import LoginManager
 
 # from sqlalchemy import create_engine
 
-db : SQLAlchemy 
+db = SQLAlchemy ()
 
 loginManager = LoginManager()
 
@@ -17,7 +17,7 @@ DB_USERNAME = os.environ['PY_FLASK_DB_USERNAME']
 DB_PASSWORD = os.environ['PY_FLASK_DB_PASSWORD']
 DB_NAME = os.environ['PY_FLASK_DB_NAME']
 
-ENVIRONMENT = os.environ['ENVIRONMENT']
+ENVIRONMENT = os.environ['PY_ENVIRONMENT']
 
 
 def config_init_db  (app): 
