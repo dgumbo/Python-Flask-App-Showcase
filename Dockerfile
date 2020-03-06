@@ -7,7 +7,9 @@ COPY ./requirements.txt ./
 
 RUN apk add --no-cache libressl-dev musl-dev libffi-dev
 RUN apk add gcc musl-dev python3-dev libffi-dev openssl-dev
-RUN apk add mssql-tools
+
+RUN apk add msodbcsql17 mssql-tools
+RUN install msodbcsql17 mssql-tools
 
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
