@@ -11,7 +11,7 @@ RUN apk add gcc musl-dev python3-dev libffi-dev openssl-dev
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
-
+FROM ubuntu:16.04
 # RUN apt-get update \
 #         && apt-get install -y --no-install-recommends dialog \
 #         && apt-get update \
