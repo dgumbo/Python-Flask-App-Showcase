@@ -8,12 +8,17 @@ COPY ./requirements.txt ./
 RUN apk add --no-cache libressl-dev musl-dev libffi-dev
 RUN apk add gcc musl-dev python3-dev libffi-dev openssl-dev
 
-RUN sudo su
-    && wget https://gallery.technet.microsoft.com/ODBC-Driver-13-for-Ubuntu-b87369f0/file/154097/2/installodbc.sh
-    && sh installodbc.sh
-
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
+
+
+RUN apt-get update \
+        && apt-get install -y --no-install-recommends dialog \
+        && apt-get update \
+	    && apt-get install -y --no-install-recommends openssh-server \
+ 
+RUN apt-get install -y msodbcsql17 mssql-tools
+
 
 ENV FLASK_APP app.py
 
