@@ -35,6 +35,8 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && rm -rf /var/lib/apt/lists/*
 
 
+ENV PATH="/opt/mssql-tools/bin:${PATH}"
+
 ENV FLASK_APP app.py
 
 EXPOSE 8000
