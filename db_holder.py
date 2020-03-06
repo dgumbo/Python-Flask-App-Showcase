@@ -44,7 +44,7 @@ def config_init_db_mssql( app, db_server, db_name, db_username, db_password ):
     # global db       
 
     db_driver = '{SQL Server}' 
-    db_driver = 'ODBC Driver 13 for SQL Server'
+    # db_driver = 'ODBC Driver 13 for SQL Server'
 
     # Configure Database URI: 
     params = urllib.parse.quote_plus(f"DRIVER={db_driver};SERVER={db_server};DATABASE={db_name};UID={db_username};PWD={db_password}")
