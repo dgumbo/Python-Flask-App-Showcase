@@ -40,6 +40,9 @@ RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 RUN /bin/bash -c "source ~/.bashrc"
 ENV PATH="/opt/mssql-tools/bin:${PATH}"
 
+# install SQL Server Python SQL Server connector module - pyodbc
+RUN pip install pyodbc
+
 ENV FLASK_APP app.py
 
 EXPOSE 8000
