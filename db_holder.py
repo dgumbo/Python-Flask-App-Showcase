@@ -43,13 +43,15 @@ def config_init_db  (app):
 def config_init_db_mssql( app, db_server, db_name, db_username, db_password ):   
     # global db       
 
-    # db_driver = '{SQL Server}' 
+    db_driver = '\{SQL Server\}' 
     # db_driver = 'ODBC Driver 13 for SQL Server'
 
-    db_driver = '{/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.4.so.2.1}'
+    # db_driver = '{/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.4.so.2.1}'
 
     # Configure Database URI: 
-    params = urllib.parse.quote_plus(f"DRIVER={db_driver};SERVER={db_server};DATABASE={db_name};UID={db_username};PWD={db_password}")
+    p = f"SERVER={db_server};DATABASE={db_name};UID={db_username};PWD={db_password}"
+    # params = urllib.parse.quote_plus(f"DRIVER={db_driver};" )
+    params = urllib.parse.quote_plus( "DRIVER={SQL Server};" + p )
  
     # initialization 
     app.config['SECRET_KEY'] = 'supersecret'
