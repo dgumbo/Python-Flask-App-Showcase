@@ -26,15 +26,18 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install SQL Server drivers and tools
-# RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-#     && curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-#     && apt-get update \
-#     && ACCEPT_EULA=Y apt-get install -y msodbcsql17 \
-#     && ACCEPT_EULA=Y apt-get install -y mssql-tools \
-#     && apt-get install -y unixodbc-dev libssl1.0.0 \
-#     && rm -rf /var/lib/apt/lists/*
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql17 \
+    && ACCEPT_EULA=Y apt-get install -y mssql-tools \
+    && apt-get install -y unixodbc unixodbc-dev libssl1.0.0 \
+    && rm -rf /var/lib/apt/lists/* 
 
 
+# install SQL Server tools
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc"
 ENV PATH="/opt/mssql-tools/bin:${PATH}"
 
 ENV FLASK_APP app.py
