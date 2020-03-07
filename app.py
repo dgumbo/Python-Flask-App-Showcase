@@ -12,9 +12,8 @@ from flask_login import login_required, login_user, logout_user
  
 from flask_sqlalchemy import SQLAlchemy 
 
-from db_holder import config_init_db, db, loginManager
-
-
+from db_holder import InitializeDBConnection, db, loginManager
+ 
  
 __version__ = (1, 0, 0, "dev") 
 
@@ -22,21 +21,14 @@ __version__ = (1, 0, 0, "dev")
 """Create and configure an instance of the Flask application."""
 app = Flask(__name__) #, instance_relative_config=True)
 
-config_init_db(app)
+InitializeDBConnection( app )
+db.init_app( app )
 
-Bootstrap(app) 
-FontAwesome(app)
-datepicker(app)
-
-# if test_config is None:
-#     # load the instance config, if it exists, when not testing
-#     app.config.from_pyfile("config.py", silent=True)
-# else:
-#     # load the test config if passed in
-#     app.config.update(test_config)
+Bootstrap( app ) 
+FontAwesome( app )
+datepicker( app )
 
 
-    
 @app.route( '/home' )
 def home():
     return redirect("/")
@@ -73,7 +65,6 @@ app.register_blueprint(invoice_api, url_prefix='/invoices')
 from masters.api.Client_Api import client_api
 app.register_blueprint(client_api, url_prefix='/clients')
 
-db.init_app(app)
 # app.cli.add_command(init_db_command)
 
 app.config['SECRET_KEY'] = 'mysecretkey'

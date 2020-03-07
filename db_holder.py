@@ -18,7 +18,7 @@ DB_PASSWORD = os.environ['PY_FLASK_DB_PASSWORD']
 DB_NAME = os.environ['PY_FLASK_DB_NAME']
 
 
-def config_init_db  ( app ):  
+def InitializeDBConnection  ( app ):  
     if ENVIRONMENT.lower() == "Dev".lower() :
         config_init_db_mssql ( app )  
     elif ENVIRONMENT.lower() == "Test".lower() :
@@ -39,7 +39,7 @@ def config_init_db_mssql( app ):
    
 
     # Configure Database URI: DB_SERVER, DB_NAME, DB_USERNAME, DB_PASSWORD 
-    params = urllib.parse.quote_plus( "DRIVER={" + db_driver + "};" + f"SERVER={DB_SERVER};DATABASE={DB_NAME};UID={DB_USERNAME};PWD={DB_PASSWORD}" )
+    params = urllib.parse.quote_plus( f"DRIVER={db_driver};SERVER={DB_SERVER};DATABASE={DB_NAME};UID={DB_USERNAME};PWD={DB_PASSWORD}" )
  
     # initialization 
     app.config['SECRET_KEY'] = 'supersecret'
