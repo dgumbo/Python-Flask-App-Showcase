@@ -12,24 +12,31 @@
     
     <table class="table">
         <tr>
-            <th>Action</th>
+            <th colspan="2"></th>
             <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
+            <th>Address 1</th>
+            <th>City</th>
+            <th>Post Code</th>
         </tr>
         {% for client in clients %}
         <tr>
             <td> 
-                <a href="{{api_root}}/create-client/update-client/{{client.id}}" class="btn btn-link" title="Update - {{ client.name }}">
+                <a href="{{api_root}}/update/{{client.id}}" class="btn btn-link" title="Update - {{ client.name }}">
                     <i class="fa fa-pencil-alt"></i>
                 </a>  
-                <a href="{{api_root}}/create-client/delete-client/{{client.id}}" class="btn btn-link" title="Delete - {{ client.name }}">
-                    <i class="fa fa-trash-alt"></i> 
-                </a> 
             </td>
-            <td>{{ client.name }}</td>
-            <td>{{ client.description }}</td>
-            <td>{{ client.price }}</td>
+            <td>
+                <form action="{{api_root}}/delete" method="POST"> 
+                    <button type="submit" class="btn btn-link" title="Delete - {{ client.name }}">
+                        <i class="fa fa-trash-alt"></i> 
+                    </button> 
+                    <input name="delete_id" type="hidden" value="{{client.id}}" />
+                </form>
+            </td>
+            <td>{{ client.name }}</td> 
+            <td>{{ client.address_1 }}</td>
+            <td>{{ client.city }}</td>
+            <td>{{ client.post_code }}</td> 
         </tr>
         {% endfor %}
     </table>   

@@ -8,33 +8,38 @@
 <div class="container">
     <h1>Products</h1> 
 
-    <a href="/products-services/create-product" class="btn btn-link"><i class="fa fa-plus"></i> Add Product</a> 
+    <a href="{{api_root}}/create" class="btn btn-link"><i class="fa fa-plus"></i> Add Product</a> 
     
     <table class="table">
         <tr>
-            <th>Action</th>
+            <th colspan="2"></th>
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
-        </tr>
+        </tr> 
         {% for product in products %}
         <tr>
             <td> 
-                <a href="/products-services/update-product/{{product.id}}" class="btn btn-link" title="Update - {{ product.name }}">
+                <a href="{{api_root}}/update/{{product.id}}" class="btn btn-link" title="Update - {{ product.name }}">
                     <i class="fa fa-pencil-alt"></i>
                 </a>  
-                <a href="/products-services/delete-product/{{product.id}}" class="btn btn-link" title="Delete - {{ product.name }}">
-                    <i class="fa fa-trash-alt"></i> 
-                </a> 
+            </td>
+            <td>
+                <form action="{{api_root}}/delete" method="POST"> 
+                    <button type="submit" class="btn btn-link" title="Delete - {{ product.product }}">
+                        <i class="fa fa-trash-alt"></i> 
+                    </button> 
+                    <input name="delete_id" type="hidden" value="{{product.id}}" />
+                </form>
             </td>
             <td>{{ product.name }}</td>
             <td>{{ product.description }}</td>
-            <td>{{ product.price }}</td>
+            <td>{{ "{:6.2f}".format( product.price)  }}</td>
         </tr>
         {% endfor %}
     </table>   
 
-    <a href="/products-services/create-product" class="btn btn-link"><i class="fa fa-plus"></i> Add Product</a> 
+    <a href="{{api_root}}/create" class="btn btn-link"><i class="fa fa-plus"></i> Add Product</a> 
          
 </div>
 

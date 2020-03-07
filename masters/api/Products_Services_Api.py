@@ -1,52 +1,98 @@
 from flask import Blueprint, render_template, request, redirect
 from masters.services import ProductsService , ServicesService
+from masters.models.Product import Product
+from masters.models.Service import Service
    
 from flask_login.utils import _get_user
 
-products_and_services_api = Blueprint('products_and_services_api', __name__) 
+products_api = Blueprint('products_api', __name__) 
 
-@products_and_services_api.before_request
+@products_api.before_request
 def restrict_to_logged_in_users(): 
     logged_in_user = _get_user() 
     if logged_in_user == None or logged_in_user.is_authenticated == False:
         return redirect('/auth/login')
 
+products_api_root = "/products"
 productsService = ProductsService()
-servicesService = ServicesService()
 
-@products_and_services_api.route('/product-list', methods=['GET'])
+@products_api.route('/', methods=['GET'])
 def product_list():
     products = productsService.get_all()
-    return render_template("/products/product-list.html", products=products)
+    return render_template("/products/product-list.html", products=products, api_root=products_api_root)
 
 
-@products_and_services_api.route('/create-product', methods=['GET'])
+@products_api.route('/create', methods=['GET'])
 def create_product():
-    return render_template("/products/create-product.html")    
+    return render_template("/products/create-product.html", api_root=products_api_root)    
 
 
-@products_and_services_api.route('/create-product', methods=['POST'])
+@products_api.route('/create', methods=['POST'])
 def handle_create_product():
-    product = request.form
+    data = request.form 
+        
+    name = data['name']
+    description = data['description']
+    price = data['price'] 
+
+    product = Product(_get_user(), name, description, price)
+
     productsService.create(product) 
-    return redirect( '/products-services/product-list'  )
+    return redirect( f'{products_api_root}'  )
 
-
-@products_and_services_api.route('/service-list', methods=['GET']) 
-def service_list():
-    services = servicesService.get_all()
-    return render_template("/products/service-list.html", services=services)
-
-
-@products_and_services_api.route('/create-service', methods=['GET'])
-def create_service():
-    service = request.form
-    servicesService.create(service) 
-    return render_template("/products/create-service.html")    
+     
+@products_api.route('/delete', methods=['POST'])
+def handle_delete(): 
+    data = request.form
     
+    delete_id = data['delete_id']  
+    productsService.delete(delete_id)
 
-@products_and_services_api.route('/create-service', methods=['POST'])
-def handle_create_service(): 
-    return redirect( '/products-services/service-list' )
+    return redirect( f'{products_api_root}' )
     
  
+
+
+services_api = Blueprint('services_api', __name__)    
+
+@services_api.before_request
+def restrict_services_api_to_logged_in_users(): 
+    logged_in_user = _get_user() 
+    if logged_in_user == None or logged_in_user.is_authenticated == False:
+        return redirect('/auth/login')
+
+service_api_root = "/services"
+servicesService = ServicesService()
+
+@services_api.route('/', methods=['GET']) 
+def service_list():
+    services = servicesService.get_all()
+    return render_template("/products/service-list.html", services=services, api_root=service_api_root)
+     
+ 
+@services_api.route('/create', methods=['GET'])
+def create_service():
+    return render_template("/products/create-service.html", api_root=service_api_root)    
+
+
+@services_api.route('/create', methods=['POST'])
+def handle_create_service():
+    data = request.form 
+        
+    name = data['name']
+    description = data['description']
+    charge = data['charge'] 
+
+    service = Service(_get_user(), name, description, charge)
+    servicesService.create(service) 
+    return redirect( f'{service_api_root}'  )
+
+     
+@services_api.route('/delete', methods=['POST'])
+def handle_delete(): 
+    data = request.form
+    
+    delete_id = data['delete_id']  
+    servicesService.delete(delete_id)
+
+    return redirect( f'{service_api_root}' )
