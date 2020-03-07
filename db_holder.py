@@ -50,11 +50,11 @@ def config_init_db_mssql( app ):
     global db
     db = SQLAlchemy(app) 
 
-    print ('\n\n\n\n')
-    print ('Environment Variables Initialised with below values')
-    print( db_driver, "; ", DB_SERVER, "; ", DB_NAME, "; ", DB_USERNAME, "; ", DB_PASSWORD )
-    print ("ENVIRONMENT :", ENVIRONMENT)
-    print ("\n\n\n\n")
+    print ( '\n\n\n\n' )
+    print ( 'Environment Variables Initialised with below values' )
+    print ( db_driver, "; ", DB_SERVER, "; ", DB_NAME, "; ", DB_USERNAME, "; ", DB_PASSWORD )
+    print ( "ENVIRONMENT :", ENVIRONMENT )
+    print ( "\n\n\n\n" )
 
 
 # def config_db_settings_sqlite(app):    

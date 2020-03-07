@@ -21,12 +21,16 @@ __version__ = (1, 0, 0, "dev")
 """Create and configure an instance of the Flask application."""
 app = Flask(__name__) #, instance_relative_config=True)
 
-InitializeDBConnection( app )
-db.init_app( app )
-
 Bootstrap( app ) 
 FontAwesome( app )
 datepicker( app )
+
+InitializeDBConnection( app )
+db.init_app( app )
+
+app.config['SECRET_KEY'] = 'mysecretkey' 
+loginManager.login_view = '/auth/login'
+loginManager.init_app(app)
 
 
 @app.route( '/home' )
@@ -67,12 +71,6 @@ app.register_blueprint(client_api, url_prefix='/clients')
 
 # app.cli.add_command(init_db_command)
 
-app.config['SECRET_KEY'] = 'mysecretkey'
-# loginManager = LoginManager()
-loginManager.login_view = '/auth/login'
-
-loginManager.init_app(app)
-
 @app.errorhandler(404)
 def errorhandler(e):
     return render_template("error-handler/not-found-handler.html", error=e)
@@ -83,42 +81,14 @@ def errorhandler(e):
 #     return render_template("error-handler/not-found-handler.html", error=e)
         
 # return app
+ 
 
-
-
-        
-    # @app.cli.command('initdb')
-    # def init_db_command_1():
-    #     """Clear existing data and create new tables."""
-    #     print("\n\n\n@app.cli.command('initdb')\n""Clear existing data and create new tables.""\n\n\n\n")
-    #     init_db()
-    #     click.echo("Initialized the database.")
-
-
-    # @app.cli.command() 
-    # def initdb():
-    #     """Clear existing data and create new tables."""
-    #     print("\n\n\n@app.cli.command()\n""Clear existing data and create new tables.""\n\n\n\n")
-    #     init_db()
-    #     click.echo("Initialized the database.")
-         
-    # return app
-
-
-def init_db(): 
-    
+def init_db():     
+    print ('\n\n\n\n\nStarting Database Initialization')
     print (db.get_binds())
     # db.drop_all()
-    db.create_all() 
-
-
-# @click.command("init-db")
-# @with_appcontext
-# def init_db_command():
-#     """Clear existing data and create new tables."""
-#     print("\n\n\n@click.command('init-db')\n""Clear existing data and create new tables.""\n\n\n\n")
-#     init_db()
-#     click.echo("Initialized the database.")
+    db.create_all()  
+    print ('Database Was initialized succesifully\n\n\n\n\n')
 
 
  
