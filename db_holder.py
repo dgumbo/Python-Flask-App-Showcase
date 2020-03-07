@@ -35,7 +35,7 @@ def config_init_db_mssql( app ):
     elif ENVIRONMENT.lower() == "Test".lower() :
         db_driver = '/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.4.so.2.1'  
     elif ENVIRONMENT.lower() == "Prod".lower() :
-        db_driver = '{/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.4.so.2.1}' 
+        db_driver = '/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.4.so.2.1' 
    
 
     # Configure Database URI: DB_SERVER, DB_NAME, DB_USERNAME, DB_PASSWORD 
