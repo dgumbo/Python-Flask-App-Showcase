@@ -17,7 +17,7 @@ class BaseEntity():
 
     def __repr__(self) :
         classname = self.__class__.__name__
-        return f"{classname}, ID : {self.id}, Active Status : {self.active_status}, Created by : {self.created_by}, on : {self.creation_time}"
+        return f"{classname}; ID: {self.id}, Active Status: {self.active_status}, Created by: {self.created_by}, on: {self.creation_time}"
 
 
     def pre_update(self): 

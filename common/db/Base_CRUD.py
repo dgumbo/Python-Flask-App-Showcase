@@ -28,14 +28,15 @@ class BaseCrud :
         return entity
 
     ## Update ###
-    def update(self, entity:BaseEntity, update_id:int):   
+    def update(self, updated_entity:BaseEntity, update_id:int):   
         upd_entity = self.model.query.get( update_id )
-        
-        entity.pre_update()
-        db.session.update(entity)
+        upd_entity = updated_entity 
+
+        upd_entity.pre_update()
+        db.session.add(upd_entity)
         self.db.session.commit()
 
-        return upd_entity
+        return upd_entity 
 
     ## Delete ###
     def delete(self, delete_id:int):    
