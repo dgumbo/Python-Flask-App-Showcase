@@ -76,7 +76,7 @@ def init_db_handler():
     return redirect("/auth/init-test-user") 
 
 @app.route('/reset-db')
-def init_db_handler():     
+def reset_db_handler():     
     drop_and_init_db()
     return redirect("/auth/init-test-user") 
 
