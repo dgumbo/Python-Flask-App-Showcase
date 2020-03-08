@@ -40,12 +40,6 @@ def home():
 @app.route( '/' )
 def index():
     return render_template("home.html")
-
-
-@app.route('/init-db')
-def init_db_handler():
-    init_db()
-    return redirect("/auth/init-test-user")
         
 
 from auth.api.Auth_Api import auth_api
@@ -74,23 +68,38 @@ app.register_blueprint(client_api, url_prefix='/clients')
 @app.errorhandler(404)
 def errorhandler(e):
     return render_template("error-handler/not-found-handler.html", error=e)
+  
 
-# @app.errorhandler(sqlalchemy.exc.OperationalError)
-# def errorhandler_sql(e):
-#     print('\n\n\n\n\n\n\n Thank you Jesus \n\n\n\n\n\n\n\n\n')
-#     return render_template("error-handler/not-found-handler.html", error=e)
-        
-# return app
- 
+@app.route('/init-db')
+def init_db_handler():    
+    init_db()
+    return redirect("/auth/init-test-user") 
+
+@app.route('/reset-db')
+def init_db_handler():     
+    drop_and_init_db()
+    return redirect("/auth/init-test-user") 
 
 def init_db():     
-    print ('\n\n\n\n\nStarting Database Initialization')
-    print (db.get_binds())
-    # db.drop_all()
+    print ('\n\n\nStarting Database Initialization')
+    print (db.get_binds()) 
     db.create_all()  
-    print ('Database Was initialized succesifully\n\n\n\n\n')
+    print ('Database Was initialized succesifully\n\n\n')
 
+def drop_and_init_db():     
+    print ('\n\n\nStarting Database  Drop All')
+    print (db.get_binds())
+    db.drop_all() 
+    print ('Finished Database Drop All')
+    print ('Starting Database Initialization')
+    db.create_all()  
+    print ('Database Was initialized succesifully\n\n\n')
+ 
 
+@app.cli.command('initdb')
+def initdb_command():
+    """Initializes the database."""
+    init_db() 
  
 
 if __name__ == "__main__" : 
