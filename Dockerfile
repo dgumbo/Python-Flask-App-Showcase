@@ -34,6 +34,11 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && apt-get install -y unixodbc unixodbc-dev libssl1.0.0 \
     && rm -rf /var/lib/apt/lists/* 
 
+RUN export FLASK_APP=app.py
+RUN flask db init
+RUN flask db migrate -m "Experiment done"
+RUN flask db upgrade
+
 
 # install SQL Server tools
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc

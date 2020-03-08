@@ -11,6 +11,7 @@ from flask_login import LoginManager
 from flask_login import login_required, login_user, logout_user
  
 from flask_sqlalchemy import SQLAlchemy 
+from flask_migrate import Migrate
 
 from db_holder import InitializeDBConnection, db, loginManager
  
@@ -27,6 +28,8 @@ datepicker( app )
 
 InitializeDBConnection( app )
 db.init_app( app )
+
+Migrate( app, db )
 
 app.config['SECRET_KEY'] = 'mysecretkey' 
 loginManager.login_view = '/auth/login'
