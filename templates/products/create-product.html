@@ -1,15 +1,16 @@
 {% extends 'main.html' %} 
 {% block title %}
-{{ 'Create New Product - ' if update_id == 0 else 'Update \'' + product.name + '\' - ' }}
+    {{ 'Create New Product - ' if update_id == 0 else 'Update \'' + product.name + '\' - ' }}
     {{ super()}}
 {% endblock %}
 {% block content %} 
-  
+   
     <div class="container">
         <h1>{% if update_id == 0 %}Create New Product{% else %}Update <strong>{{product.name}}</strong>{% endif %}</h1>
         <p> </p>
         <form class="form form-horizontal" action="{{api_root}}/{{ 'create' if update_id == 0 else 'update/' + update_id }}" method="POST">
-            <div class="form-group row">
+            <div class="form-
+            group row">
                 <label for="name" class="col col-2  col-form-label" >Name :</label>
                 <div class="col col-6">
                     <input id="name" name="name" type="text" class="form-control" value="{{product.name}}" />

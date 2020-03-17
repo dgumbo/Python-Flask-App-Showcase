@@ -16,8 +16,8 @@ class GenericService:
         # else :
         #     raise EntityNotSubClassOfBaseEntity_Error("An error occurred. Entity does not extend BaseEntity")
  
-    def update(self, entity:BaseEntity, id:int):        
-        return self.entityCrud.update(  entity,  id)
+    def update( self, entity:BaseEntity, id:int ):        
+        return self.entityCrud.update( entity, id )
         # if isinstance(entity, BaseEntity) :
         #     return BaseEntity() #"Test User1", "Passwor1")
         # else :
@@ -34,5 +34,13 @@ class GenericService:
         return self.entityCrud.find(id)  
        
     def get_all(self) :
-        return self.entityCrud.find_all()  
-         
+        return self.entityCrud.find_all() 
+       
+    def get_all_json(self) :  
+        entity_list = self.entityCrud.find_all()  
+  
+        entity_list_json = []
+        for entity in entity_list:   
+            entity_list_json.append(entity.json())  
+
+        return entity_list_json

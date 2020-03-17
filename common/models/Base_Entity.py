@@ -1,7 +1,8 @@
 from db_holder import db
 from datetime import datetime
+ 
 
-class BaseEntity(): 
+class BaseEntity( object ): 
 
     id = db.Column(db.Integer, primary_key=True)   
     active_status = db.Column(db.Boolean, nullable=False)  
@@ -31,3 +32,15 @@ class BaseEntity():
         if self.update_time == None :
             self.update_time = now 
  
+
+    def json(self):
+        return {
+            'id': self.id, 
+            'active_status': self.active_status,
+            'created_by': self.created_by,
+            # 'creation_time':   self.creation_time,
+            'updated_by': self.updated_by,
+            # 'update_time': self.update_time,
+        }   
+ 
+        # "items": [item.json() for item in self.items.all()],
