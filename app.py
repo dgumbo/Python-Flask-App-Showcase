@@ -12,6 +12,7 @@ from flask_login import login_required, login_user, logout_user
  
 from flask_sqlalchemy import SQLAlchemy 
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 from db_holder import InitializeDBConnection, db, loginManager
  
@@ -35,6 +36,7 @@ app.config['SECRET_KEY'] = 'mysecretkey'
 loginManager.login_view = '/auth/login'
 loginManager.init_app(app)
 
+CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route( '/home' )
 def home():
@@ -60,8 +62,8 @@ app.register_blueprint(products_api, url_prefix='/products')
 from masters.api.Products_Services_Api import services_api
 app.register_blueprint(services_api, url_prefix='/services')
 
-from invoice.api.Invoice_Api import invoice_api
-app.register_blueprint(invoice_api, url_prefix='/invoices')
+from invoice.api.Invoice_Api import invoice_controller
+app.register_blueprint(invoice_controller, url_prefix='/invoices')
 
 from masters.api.Client_Api import client_api
 app.register_blueprint(client_api, url_prefix='/clients')
