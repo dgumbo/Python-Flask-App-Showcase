@@ -22,6 +22,7 @@ class User(BaseEntity, db.Model, UserMixin):
     products = db.relationship("Product", primaryjoin="User.id==Product.owner_id " )
     services = db.relationship("Service", primaryjoin="User.id==Service.owner_id " )
     
+    
     def __init__(self, username, email, password):
         BaseEntity.__init__(self)
         self.username = username
@@ -29,4 +30,8 @@ class User(BaseEntity, db.Model, UserMixin):
         self.password_hash = bcrypt.generate_password_hash(password)
 
     def check_password(self, password):
-        return bcrypt.check_password_hash(self.password_hash, password)
+        return bcrypt.check_password_hash(self.password_hash, password) 
+ 
+    def __repr__(self) :
+        super_repr = BaseEntity.__repr__(self)
+        return super_repr + f", Username : {self.username}, Email : {self.email}"

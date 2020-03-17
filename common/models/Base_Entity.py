@@ -18,8 +18,8 @@ class BaseEntity( object ):
 
     def __repr__(self) :
         classname = self.__class__.__name__
-        return f"{classname}; ID: {self.id}, Active Status: {self.active_status}, Created by: {self.created_by}, on: {self.creation_time}"
-
+        return f"Classname: {classname}, ID: {self.id}, Active status: {self.active_status}, Created by: {self.created_by}, Creation time: {self.creation_time}"
+ 
 
     def pre_update(self): 
         now = datetime.now()
@@ -42,5 +42,11 @@ class BaseEntity( object ):
             'updated_by': self.updated_by,
             # 'update_time': self.update_time,
         }   
+    
+    
+    def json(self) :
+        classname = self.__class__.__name__
+        return { 'Classname': classname, 'ID': self.id, 'Active status': self.active_status, 'Created by': self.created_by, 'Creation time': self.creation_time }
+
  
         # "items": [item.json() for item in self.items.all()],
