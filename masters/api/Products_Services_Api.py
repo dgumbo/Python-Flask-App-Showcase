@@ -5,7 +5,7 @@ from masters.models.Service import Service
    
 from flask_login.utils import _get_user
 
-products_api = Blueprint('products_api', __name__) 
+products_api = Blueprint('products_api', __name__)  
 
 @products_api.before_request
 def restrict_to_logged_in_users(): 
@@ -22,9 +22,33 @@ def product_list():
     return render_template("/products/product-list.html", products=products, api_root=products_api_root)
 
 
+@products_api.route('/update/<update_id>', methods=['GET'])
+def update_product(update_id): 
+
+    product = productsService.find(update_id)
+    return render_template("/products/create-product.html", update_id=update_id, product=product, api_root=products_api_root) 
+
+
+@products_api.route('/update/<update_id>', methods=['POST'])
+def update_product_post(update_id): 
+    data = request.form 
+
+    name = data['name']
+    description = data['description']
+    price = data['price'] 
+
+    product = productsService.find(update_id)
+    product.name=name
+    product.description=description
+    product.price=price
+
+    productsService.update(product, update_id) 
+    return redirect( f'{products_api_root}'  )
+
 @products_api.route('/create', methods=['GET'])
 def create_product():
-    return render_template("/products/create-product.html", api_root=products_api_root)    
+    # product = Product()
+    return render_template("/products/create-product.html", update_id=0, product=None, api_root=products_api_root)    
 
 
 @products_api.route('/create', methods=['POST'])

@@ -1,7 +1,9 @@
 from common.models.Base_Entity import BaseEntity, db
 from auth.models.User import User
 
-class PaymentDetail(BaseEntity, db.Model):
+import json  
+
+class PaymentDetail(BaseEntity, db.Model ):
       
     acc_name = db.Column(db.String(64), nullable=False)   
     bank_name = db.Column(db.String(64), nullable=False)   
@@ -19,4 +21,24 @@ class PaymentDetail(BaseEntity, db.Model):
         self.bank_name = bank_name
         self.sort_code = sort_code
         self.acc_number = acc_number
+ 
 
+    def json(self):
+        print ( self.__dict__ )
+
+        me = self.__dict__ 
+
+        base_json_data = BaseEntity.json(self)
+        
+        obj_json_data = {
+            'acc_name': self.acc_name,
+            'bank_name': self.bank_name,
+            'sort_code': self.sort_code,
+            'acc_number': self.acc_number,     
+            'owner_id': self.owner_id,
+        }     
+         
+        obj_json_data.update (base_json_data)
+        
+        return obj_json_data
+        # return me
